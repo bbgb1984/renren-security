@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
+//	@Cacheable(value="mycache",key="100")
 	public List<SysRoleEntity> queryList(Map<String, Object> map) {
 		return sysRoleDao.queryList(map);
 	}
