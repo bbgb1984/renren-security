@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.VoteActivityResultDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.VoteActivityResultEntity" id="voteActivityResultMap">
+        <result property="id" column="id"/>
+        <result property="voteActivityId" column="vote_activity_id"/>
+        <result property="departId" column="depart_id"/>
+        <result property="voteActivityParamId" column="vote_activity_param_id"/>
+        <result property="voteActivityParamVal" column="vote_activity_param_val"/>
+        <result property="userId" column="user_id"/>
+        <result property="voteTime" column="vote_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.entity.VoteActivityResultEntity">
+		select * from vote_activity_result where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.entity.VoteActivityResultEntity">
+		select * from vote_activity_result
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from vote_activity_result 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.entity.VoteActivityResultEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into vote_activity_result
+		(
+			`vote_activity_id`, 
+			`depart_id`, 
+			`vote_activity_param_id`, 
+			`vote_activity_param_val`, 
+			`user_id`, 
+			`vote_time`, 
+			`status`
+		)
+		values
+		(
+			#{voteActivityId}, 
+			#{departId}, 
+			#{voteActivityParamId}, 
+			#{voteActivityParamVal}, 
+			#{userId}, 
+			#{voteTime}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.entity.VoteActivityResultEntity">
+		update vote_activity_result 
+		<set>
+			<if test="voteActivityId != null">`vote_activity_id` = #{voteActivityId}, </if>
+			<if test="departId != null">`depart_id` = #{departId}, </if>
+			<if test="voteActivityParamId != null">`vote_activity_param_id` = #{voteActivityParamId}, </if>
+			<if test="voteActivityParamVal != null">`vote_activity_param_val` = #{voteActivityParamVal}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="voteTime != null">`vote_time` = #{voteTime}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from vote_activity_result where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from vote_activity_result where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

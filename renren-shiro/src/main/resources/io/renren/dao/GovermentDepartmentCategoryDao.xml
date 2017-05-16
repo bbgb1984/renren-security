@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.GovermentDepartmentCategoryDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.GovermentDepartmentCategoryEntity" id="govermentDepartmentCategoryMap">
+        <result property="id" column="id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.entity.GovermentDepartmentCategoryEntity">
+		select * from goverment_department_category where id = #{value} 
+	</select>
+
+	<select id="queryObjectByName" resultType="io.renren.entity.GovermentDepartmentCategoryEntity">
+		select * from goverment_department_category where category_name = #{categoryName} 
+		<if test="id!=null">
+		and id!=#{id}
+		</if>
+		limit 0,1
+	</select>
+
+	<select id="queryList" resultType="io.renren.entity.GovermentDepartmentCategoryEntity">
+		select * from goverment_department_category where 1=1 
+        <choose>
+        <when test="categoryName != null">
+         and category_name like  CONCAT(CONCAT('%', #{categoryName}), '%') 
+        </when>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from goverment_department_category where 1=1
+        <if test="categoryName != null">
+         and category_name like CONCAT(CONCAT('%', #{categoryName}), '%')
+        </if>
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.entity.GovermentDepartmentCategoryEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into goverment_department_category
+		(
+			`category_name`, 
+			`status`
+		)
+		values
+		(
+			#{categoryName}, 
+			'1'
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.entity.GovermentDepartmentCategoryEntity">
+		update goverment_department_category 
+		<set>
+			<if test="categoryName != null">`category_name` = #{categoryName}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from goverment_department_category where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from goverment_department_category where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

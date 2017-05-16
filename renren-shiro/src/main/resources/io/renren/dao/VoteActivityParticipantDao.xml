@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.dao.VoteActivityParticipantDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.entity.VoteActivityParticipantEntity" id="voteActivityParticipantMap">
+        <result property="id" column="id"/>
+        <result property="voteActivityId" column="vote_activity_id"/>
+        <result property="departId" column="depart_id"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.renren.entity.VoteActivityParticipantEntity">
+		select * from vote_activity_participant where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.renren.entity.VoteActivityParticipantEntity">
+		select * from vote_activity_participant
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from vote_activity_participant 
+	</select>
+	 
+	<insert id="save" parameterType="io.renren.entity.VoteActivityParticipantEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into vote_activity_participant
+		(
+			`vote_activity_id`, 
+			`depart_id`, 
+			`create_user`, 
+			`create_time`, 
+			`status`
+		)
+		values
+		(
+			#{voteActivityId}, 
+			#{departId}, 
+			#{createUser}, 
+			#{createTime}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.renren.entity.VoteActivityParticipantEntity">
+		update vote_activity_participant 
+		<set>
+			<if test="voteActivityId != null">`vote_activity_id` = #{voteActivityId}, </if>
+			<if test="departId != null">`depart_id` = #{departId}, </if>
+			<if test="createUser != null">`create_user` = #{createUser}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from vote_activity_participant where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from vote_activity_participant where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
