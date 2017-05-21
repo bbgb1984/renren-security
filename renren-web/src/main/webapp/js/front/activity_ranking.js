@@ -217,25 +217,25 @@ $(function () {
     myChart2.setOption(option2);
     myChart3.setOption(option3);
 
-    var averageRankTbody = $('.average-rank table tbody');
-    var data = getRandomRankData(60,100,10);
-    averageRankTbody.html(template('sortrank-tem',{data:sortRank('count',data)}));
-    setRankStyle('count',data);
-    var reRank = $('.average-rank .re-rank');
-    $(reRank[0]).css({
-        'backgroundColor':'#C61000'
-    }).find('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
-    reRank.on('click', function () {
-        reRank.find('.fa').removeClass('fa-caret-down').addClass('fa-caret-up');
-        reRank.css({
-            'backgroundColor':'#A60D00'
-        });
-        $(this).find('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
-        $(this).css({
-            'backgroundColor':'#C61000'
-        });
-        setRankStyle($(this).attr('odds'),data);
-    })
+//    var averageRankTbody = $('.average-rank table tbody');
+//    var data = getRandomRankData(60,100,10);
+//    averageRankTbody.html(template('sortrank-tem',{data:sortRank('count',data)}));
+//    setRankStyle('count',data);
+//    var reRank = $('.average-rank .re-rank');
+//    $(reRank[0]).css({
+//        'backgroundColor':'#C61000'
+//    }).find('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
+//    reRank.on('click', function () {
+//        reRank.find('.fa').removeClass('fa-caret-down').addClass('fa-caret-up');
+//        reRank.css({
+//            'backgroundColor':'#A60D00'
+//        });
+//        $(this).find('.fa').removeClass('fa-caret-up').addClass('fa-caret-down');
+//        $(this).css({
+//            'backgroundColor':'#C61000'
+//        });
+//        setRankStyle($(this).attr('odds'),data);
+//    })
 
 
     function getRandomData(min,max,index) {
@@ -282,11 +282,9 @@ $(function () {
                     id:i+1,
                     name:'单位名称'+(i+1),
                     count:Math.floor(Math.random()*(20000-1000+1)+1000),
-                    zhiliang:Math.floor(Math.random()*(max-min+1)+min),
-                    taidu:Math.floor(Math.random()*(max-min+1)+min),
-                    xiaolv:Math.floor(Math.random()*(max-min+1)+min),
-                    suyang:Math.floor(Math.random()*(max-min+1)+min),
-                    lianjie:Math.floor(Math.random()*(max-min+1)+min)
+                    1:Math.floor(Math.random()*(max-min+1)+min),
+                    2:Math.floor(Math.random()*(max-min+1)+min),
+                    5:Math.floor(Math.random()*(max-min+1)+min)
                 }
             )
         }

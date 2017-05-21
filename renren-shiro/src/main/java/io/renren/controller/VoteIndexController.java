@@ -118,7 +118,49 @@ public class VoteIndexController extends AbstractController {
 		map.put("highRateTopTen", highRateTopTen);
 		
 		List<VoteActivityParamEntity> paramList=voteActivityParamService.queryObjectByActivityId(id);
+		List<VoteRankingVo> maxCommentTopTen=voteActivityResultService.queryMaxCommentTopTen(id);
 
+		Map<String,String> maxCommentTopTenMap=new HashMap<String, String>();//单位总评价数
+		Map<String,List<VoteRankingVo>> departResultLst=new HashMap<String,List<VoteRankingVo>>();
+		Map<String,String> param=new HashMap<String, String>();
+		param.put("activityId", id);
+		
+		List<String[]> resultLst=new ArrayList<String[]>();
+//		汇总单位每项评价个数和好评率
+		if(maxCommentTopTen!=null){
+			for(int i=0,len=maxCommentTopTen.size();i<len;i++){
+				String[] details=new String[paramList.size()+2];
+				VoteRankingVo vo=maxCommentTopTen.get(i);
+				details[0]=vo.getDepartName();
+				details[1]=vo.getCommentNum()+"";
+				maxCommentTopTenMap.put(vo.getDepartId()+"", vo.getCommentNum()+"");
+				param.put("departId", vo.getDepartId());
+				List<VoteRankingVo> resultList=voteActivityResultService.queryCommentResultDetail(param);
+				Map<String,String> _map=listToMap(resultList);
+				int count=2;
+				for(VoteActivityParamEntity v:paramList){
+					if(_map.containsKey(v.getParamName())){
+						details[count++]=_map.get(v.getParamName());
+					}else{
+						details[count++]="";
+					}
+				}
+				resultLst.add(details);
+			}
+		}
+		map.put("resultList", resultLst);
+		System.out.println(JSON.toJSON(departResultLst));
+//		
+//		Iterator<String> iter=departResultLst.keySet().iterator();
+//		while(iter.hasNext()){
+//			String[] details=new String[paramList.size()];
+//			String key=iter.next();
+//			List<VoteRankingVo> lst=departResultLst.get(key);
+//			for()
+//		}
+		
+		
+		
 		
 		map.put("id", id);
 		map.put("paramList", paramList);
@@ -233,26 +275,42 @@ public class VoteIndexController extends AbstractController {
 		
 		
 		System.out.println(JSON.toJSONString(map));
+//		Map<String,List<String>> mm=new HashMap<String, List<String>>();
+//		for(VoteRankingVo s:maxCommentTopTen){
+//			List<String> bb=new ArrayList<String>();
+//			List<VoteRankingVo> l=departNameResultLst.get(s.getDepartId());
+//			for(VoteRankingVo v:l){
+//				bb.add(v.getTotalRate()+"");
+//			}
+//			bb.add(s.getCommentNum()+"");
+//			mm.put(s.getDepartName(), bb);
+//		}
 		
-		for(VoteRankingVo s:maxCommentTopTen){
-			
-		}
-		
-		
-		Set<String> keys=departNameResultLst.keySet();
-		Iterator<String> ite=keys.iterator();
-		List<String> maxList=new ArrayList<String>();
-		while (ite.hasNext()){
-			List<String> _maxList=new ArrayList<String>();
-			String key=ite.next();
-			List<VoteRankingVo> ls=departNameResultLst.get(key);
-			for(VoteRankingVo v:ls){
-				_maxList.add(v.getTotalRate()+"");
-				_maxList.add(maxCommentTopTenMap.get(key));
-			}
-			maxList.addAll(_maxList);
-		}
-		
+//		map.put("detaiData", mm);
+//		Set<String> keys=departNameResultLst.keySet();
+//		Iterator<String> ite=keys.iterator();
+//		List<String> maxList=new ArrayList<String>();
+//		while (ite.hasNext()){
+//			List<String> _maxList=new ArrayList<String>();
+//			String key=ite.next();
+//			List<VoteRankingVo> ls=departNameResultLst.get(key);
+//			for(VoteRankingVo v:ls){
+//				_maxList.add(v.getTotalRate()+"");
+//				_maxList.add(maxCommentTopTenMap.get(key));
+//			}
+//			maxList.addAll(_maxList);
+//		}
+//		
 		return JSON.toJSONString(map);
+	}
+	
+	private Map<String,String> listToMap(List<VoteRankingVo> lst){
+		Map<String,String> map=new HashMap<String, String>();
+		if(lst!=null&&lst.size()>0){
+			for(VoteRankingVo v:lst){
+				map.put(v.getParamName(), v.getTotalRate()+"");
+			}
+		}
+		return map;
 	}
 }

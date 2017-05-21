@@ -103,16 +103,23 @@
                            <tr>
                                <td>排行</td>
                                <td>单位名称</td>
-                               <td class="re-rank" odds="count">评价次数<span class="fa fa-caret-up"></span></td>
+                               <td class="re-rank" odds="count">评价次数</td>
                                <c:forEach items="${paramList }" var="item">
-                               <td class="re-rank" odds="${item.id }">${item.paramName }<span class="fa fa-caret-up"></span></td>
+                               <td class="re-rank" odds="${item.id }">${item.paramName }</td>
                                
                                </c:forEach>
                            </tr>
                            </thead>
                            <tbody>
-
-
+                           <c:if test=""></c:if>
+                           <c:forEach items="${resultList }" var="item" varStatus="step">
+							<tr <c:if test="${step.index%2 eq 1 }"> style="background-color: rgb(240, 240, 240);"</c:if>>
+                               <td>${step.index+1 }</td>
+                               <c:forEach items="${item }" var="sub_item">
+                               <td >${sub_item}</td>
+                               </c:forEach>
+                           </tr>
+						</c:forEach>
                            </tbody>
                        </table>
                    </div>
