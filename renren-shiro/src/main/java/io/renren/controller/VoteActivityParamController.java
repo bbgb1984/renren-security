@@ -1,21 +1,20 @@
 package io.renren.controller;
 
-import java.util.List;
-import java.util.Map;
+import io.renren.entity.VoteActivityParamEntity;
+import io.renren.service.VoteActivityParamService;
+import io.renren.utils.R;
+import io.renren.utils.RRException;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.entity.VoteActivityParamEntity;
-import io.renren.service.VoteActivityParamService;
-import io.renren.utils.PageUtils;
-import io.renren.utils.Query;
-import io.renren.utils.R;
 
 
 /**
@@ -34,18 +33,15 @@ public class VoteActivityParamController  extends AbstractController {
 	/**
 	 * 列表
 	 */
-	@RequestMapping("/list")
-	@RequiresPermissions("voteactivityparam:list")
-	public R list(@RequestParam Map<String, Object> params){
+	@RequestMapping("/list/{id}")
+	@RequiresAuthentication
+	public R list(@PathVariable("id") Long id){
 		//查询列表数据
-        Query query = new Query(params);
 
-		List<VoteActivityParamEntity> voteActivityParamList = voteActivityParamService.queryList(query);
-		int total = voteActivityParamService.queryTotal(query);
+		List<VoteActivityParamEntity> voteActivityParamList = voteActivityParamService.queryList(id);
 		
-		PageUtils pageUtil = new PageUtils(voteActivityParamList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return R.ok().put("list", voteActivityParamList);
 	}
 	
 	
@@ -53,7 +49,7 @@ public class VoteActivityParamController  extends AbstractController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	@RequiresPermissions("voteactivityparam:info")
+	@RequiresAuthentication
 	public R info(@PathVariable("id") Long id){
 		VoteActivityParamEntity voteActivityParam = voteActivityParamService.queryObject(id);
 		
@@ -64,8 +60,9 @@ public class VoteActivityParamController  extends AbstractController {
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	@RequiresPermissions("voteactivityparam:save")
-	public R save(@RequestBody VoteActivityParamEntity voteActivityParam){
+	@RequiresAuthentication
+	public R save(@RequestBody VoteActivityParamEntity[] voteActivityParam){
+		validateDate(voteActivityParam);
 		voteActivityParamService.save(voteActivityParam);
 		
 		return R.ok();
@@ -75,7 +72,7 @@ public class VoteActivityParamController  extends AbstractController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("voteactivityparam:update")
+	@RequiresAuthentication
 	public R update(@RequestBody VoteActivityParamEntity voteActivityParam){
 		voteActivityParamService.update(voteActivityParam);
 		
@@ -85,12 +82,26 @@ public class VoteActivityParamController  extends AbstractController {
 	/**
 	 * 删除
 	 */
-	@RequestMapping("/delete")
-	@RequiresPermissions("voteactivityparam:delete")
-	public R delete(@RequestBody Long[] ids){
-		voteActivityParamService.deleteBatch(ids);
+	@RequestMapping("/delete/{id}")
+	@RequiresAuthentication
+	public R delete(@PathVariable("id") Long id){
+		voteActivityParamService.delete(id);
 		
 		return R.ok();
 	}
 	
+	private void validateDate(VoteActivityParamEntity[] entityLst){
+		if(entityLst==null){
+			throw new RRException("请添加评级选项");
+		}
+		for(int i=0,len=entityLst.length;i<len;i++){
+			if(StringUtils.isBlank(entityLst[i].getParamName())){
+				throw new RRException("评级选项不能为空！");
+			}
+			if(StringUtils.isBlank(entityLst[i].getVoteActivityId()+"")){
+				throw new RRException("数据异常，请刷新页面重试！");
+			}
+		}
+		
+	}
 }

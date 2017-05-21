@@ -8,65 +8,99 @@
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.voteName" @keyup.enter="query" placeholder="单位名称">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
 			#if($shiro.hasPermission("voteactivity:save"))
 			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 			#end
 			#if($shiro.hasPermission("voteactivity:update"))
 			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
 			#end
+			<!-- #if($shiro.hasPermission("voteactivity:delete"))
+			<a class="btn btn-primary" @click="stop"><i class="fa fa-trash-o"></i>&nbsp;停用</a>
+			#end
 			#if($shiro.hasPermission("voteactivity:delete"))
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			<a class="btn btn-primary" @click="start"><i class="fa fa-trash-o"></i>&nbsp;启用</a>
+			#end -->
+			#if($shiro.hasPermission("voteactivity:delete"))
+			<a class="btn btn-primary" @click="config"><i class="fa fa-trash-o"></i>&nbsp;配置活动选项</a>
 			#end
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
     </div>
-    
-    <div v-show="!showList" class="panel panel-default">
+
+
+		<div v-show="!showList2" class="panel panel-default"
+			style='position: fixed; z-index: 999; top: 0; width: 100%; height: 100%'>
+			<div class="panel-heading">{{title}}</div>
+
+			<table class="table" id="tabs">
+				<thead>
+					<tr>
+						<th>活动选项</th>
+						<th></th>
+						<th><input type="button" class="btn btn-danger" @click="addColumn" value="增加选项"/></th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- <tr>
+						<td>Tanmay</td>
+						<td><input type="radio" value="1">满意，<input type="radio" value="2">比较满意<input type="radio" value="3"/>不满意</td>
+					</tr>
+					<tr>
+						<td>Sachin</td>
+						<td><input type="radio" value="1">满意，<input type="radio" value="2">比较满意<input type="radio" value="3"/>不满意</td>
+					</tr> -->
+				</tbody>
+			</table>
+			<div class="form-group" style='position: fixed; bottom: 0; width: 100%; '>
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveColumn" value="保存"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</div>
+
+		<div v-show="!showList" class="panel panel-default">
 		<div class="panel-heading">{{title}}</div>
-		<form class="form-horizontal">
+		<form class="form-horizontal" id="myform">
 											<div class="form-group">
 			   	<div class="col-sm-2 control-label">评价活动名称</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.voteName" placeholder="评价活动名称"/>
+			      <input type="text" class="form-control" v-model="voteActivity.voteName" placeholder="评价活动名称(50字以内)"/>
 			    </div>
 			</div>
 									<div class="form-group">
 			   	<div class="col-sm-2 control-label">评价活动描述</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.voteDesc" placeholder="评价活动描述"/>
+			   	 <textarea rows="10" cols="3" class="form-control" v-model="voteActivity.voteDesc" placeholder="评价活动描述(200字以内)">
+			   	 </textarea>
 			    </div>
 			</div>
+			
 									<div class="form-group">
-			   	<div class="col-sm-2 control-label">开始时间</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.beginTime" placeholder="开始时间"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">开始时间</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.endTime" placeholder="开始时间"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">状态 1：生效；0：无效</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.status" placeholder="状态 1：生效；0：无效"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">个人最多可评价单位个数</div>
+			   	<div class="col-sm-2 control-label">评价个数</div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="voteActivity.maxNum" placeholder="个人最多可评价单位个数"/>
 			    </div>
 			</div>
+			
+			
 									<div class="form-group">
-			   	<div class="col-sm-2 control-label">创建者</div>
+			   	<div class="col-sm-2 control-label">开始时间</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivity.createUser" placeholder="创建者"/>
+			      <input type="text" class="form-control" v-model="voteActivity.beginTime"  id="beginTime"   placeholder="开始时间"/>
 			    </div>
 			</div>
+				<!-- 					<div class="form-group">
+			   	<div class="col-sm-2 control-label">截止时间</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="voteActivity.endTime" id="endTime" placeholder="开始时间"/>
+			    </div>
+			</div> -->
+					
 							<div class="form-group">
 				<div class="col-sm-2 control-label"></div> 
 				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
@@ -74,8 +108,19 @@
 			</div>
 		</form>
 	</div>
+   
 </div>
 
 <script src="${rc.contextPath}/js/sys/voteactivity.js?_${date.systemTime}"></script>
+<script>
+  laydate({
+  elem: '#beginTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+  event: 'click' //响应事件。如果没有传入event，则按照默认的click
+}); 
+/* laydate({
+  elem: '#endTime', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+  event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+}); */
+</script>
 </body>
 </html>

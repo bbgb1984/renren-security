@@ -3,6 +3,7 @@ package io.renren.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,13 +44,37 @@ public class VoteActivityServiceImpl implements VoteActivityService {
 	}
 	
 	@Override
-	public void delete(Long id){
+	public void stop(Long id){
 		voteActivityDao.delete(id);
 	}
 	
 	@Override
-	public void deleteBatch(Long[] ids){
+	public void start(Long id){
+		voteActivityDao.delete2(id);
+	}
+	
+	@Override
+	public void stopBatch(Long[] ids){
 		voteActivityDao.deleteBatch(ids);
+	}
+	
+	@Override
+	public void startBatch(Long[] ids){
+		voteActivityDao.deleteBatch2(ids);
+	}
+
+	@Override
+	public VoteActivityEntity queryActiveObject(String id) {
+		// TODO Auto-generated method stub
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("value", id);
+		return voteActivityDao.queryActiveObject(map);
+
+	}
+
+	@Override
+	public void sumExploreNum(Long id) {
+		voteActivityDao.sumExploreNum(id);
 	}
 	
 }

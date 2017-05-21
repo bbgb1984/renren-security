@@ -3,14 +3,11 @@ $(function () {
         url: '../voteactivityresult/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '评价活动id', name: 'voteActivityId', index: 'vote_activity_id', width: 80 }, 			
-			{ label: '单位id', name: 'departId', index: 'depart_id', width: 80 }, 			
-			{ label: '评价项id', name: 'voteActivityParamId', index: 'vote_activity_param_id', width: 80 }, 			
+			{ label: '单位名称', name: 'departId', index: 'depart_id', width: 80 }, 			
+			{ label: '评价项', name: 'voteActivityParamId', index: 'vote_activity_param_id', width: 80 }, 			
 			{ label: '评价值', name: 'voteActivityParamVal', index: 'vote_activity_param_val', width: 80 }, 			
 			{ label: '投票人', name: 'userId', index: 'user_id', width: 80 }, 			
-			{ label: '投票时间', name: 'voteTime', index: 'vote_time', width: 80 }, 			
-			{ label: '状态 1：有效；0：无效', name: 'status', index: 'status', width: 80 }			
+			{ label: '投票时间', name: 'voteTime', index: 'vote_time', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,

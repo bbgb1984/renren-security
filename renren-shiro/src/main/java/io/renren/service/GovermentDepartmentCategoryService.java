@@ -20,6 +20,8 @@ public interface GovermentDepartmentCategoryService {
 	
 	List<GovermentDepartmentCategoryEntity> queryList(Map<String, Object> map);
 	
+	List<GovermentDepartmentCategoryEntity> categorylist();
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(GovermentDepartmentCategoryEntity govermentDepartmentCategory);

@@ -5,6 +5,8 @@ import io.renren.xss.SQLFilter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 查询参数
  *
@@ -21,17 +23,18 @@ public class Query extends LinkedHashMap<String, Object> {
 
     public Query(Map<String, Object> params){
         this.putAll(params);
-
         //分页参数
-        this.page = Integer.parseInt(params.get("page").toString());
-        this.limit = Integer.parseInt(params.get("limit").toString());
+        this.page = Integer.parseInt((params.get("page")+"").equals("null")?"1":params.get("page").toString());
+        this.limit = Integer.parseInt((params.get("limit")+"").equals("null")?"100000":params.get("limit").toString());
         this.put("offset", (page - 1) * limit);
         this.put("page", page);
         this.put("limit", limit);
 
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String sidx = params.get("sidx").toString();
-        String order = params.get("order").toString();
+        boolean b=(params.get("sidx")+"").equals("null");
+        System.out.println(b);
+        String sidx = (params.get("sidx")+"").equals("null")?"":params.get("sidx")+"";
+        String order = (params.get("order")+"").equals("null")?"":params.get("order")+"";
         this.put("sidx", SQLFilter.sqlInject(sidx));
         this.put("order", SQLFilter.sqlInject(order));
     }

@@ -1,0 +1,42 @@
+.main{
+  width:1000px;
+  background-color: #fff;
+}
+
+body{
+  background-color: #f9f9f9;
+}
+
+/*header*/
+.header {
+  height: 200px;
+  background: url("../../../imgs/topbanner_u81.png") no-repeat;
+  background-size: 100% 100%;
+}
+/*footer*/
+.footer{
+  font-size: 12px;
+  .footer-line1{
+    width:466px;
+    img{
+      height: 60px;
+      width: 60px;
+    }
+    .pull-right{
+      display: block;
+      height: 60px;
+      line-height: 60px;
+
+      span{
+        border-left: 1px solid #cccccc;
+      }
+    }
+  }
+  .footer-line2{
+    text-align: center;
+    padding-bottom: 30px;
+  }
+  a{
+    margin:0 5px;
+  }
+}

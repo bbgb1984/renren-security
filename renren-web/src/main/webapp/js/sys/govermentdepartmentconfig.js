@@ -36,6 +36,9 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			name: null
+		},
 		showList: true,
 		title: null,
 		govermentDepartmentConfig: {}
@@ -48,6 +51,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.govermentDepartmentConfig = {};
+			vm.getCategory();
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -66,7 +70,7 @@ var vm = new Vue({
 			    url: url,
 			    data: JSON.stringify(vm.govermentDepartmentConfig),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code == 0){
 						alert('操作成功', function(index){
 							vm.reload();
 						});
@@ -104,11 +108,22 @@ var vm = new Vue({
                 vm.govermentDepartmentConfig = r.govermentDepartmentConfig;
             });
 		},
+		getCategory: function(id){
+			
+			 $("#myselect").empty(); //清空省份SELECT控件
+			 $("#myselect").append("<option value=''>请选择单位类别</option>");
+			$.get("../govermentdepartmentcategory/categorylist", function(r){
+				$.each(r.list, function(i, obj) {
+					
+					$("#myselect").append("<option value='"+obj.id+"'>"+obj.categoryName+"</option>");
+	            });
+			});
+		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-				postData:{'name': vm.name},
+				postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
 			

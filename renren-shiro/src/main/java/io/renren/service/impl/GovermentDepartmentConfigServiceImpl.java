@@ -3,6 +3,7 @@ package io.renren.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,12 @@ public class GovermentDepartmentConfigServiceImpl implements GovermentDepartment
 	@Override
 	public List<GovermentDepartmentConfigEntity> queryList(Map<String, Object> map){
 		return govermentDepartmentConfigDao.queryList(map);
+	}
+	
+	
+	@Override
+	public List<GovermentDepartmentConfigEntity> queryAllList(Map<String, Object> map){
+		return govermentDepartmentConfigDao.queryAllList(map);
 	}
 	
 	@Override

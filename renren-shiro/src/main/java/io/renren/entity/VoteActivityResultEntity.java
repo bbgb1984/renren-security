@@ -21,6 +21,8 @@ public class VoteActivityResultEntity implements Serializable {
 	private Long voteActivityId;
 	//单位id
 	private Long departId;
+	//单位名称
+	private String departName;
 	//评价项id
 	private Long voteActivityParamId;
 	//评价值
@@ -31,6 +33,8 @@ public class VoteActivityResultEntity implements Serializable {
 	private Date voteTime;
 	//状态 1：有效；0：无效
 	private String status;
+	
+	private String commentDesc;
 
 	/**
 	 * 设置：
@@ -127,5 +131,17 @@ public class VoteActivityResultEntity implements Serializable {
 	 */
 	public String getStatus() {
 		return status;
+	}
+	public String getCommentDesc() {
+		return commentDesc;
+	}
+	public void setCommentDesc(String commentDesc) {
+		this.commentDesc = commentDesc;
+	}
+	public String getDepartName() {
+		return departName;
+	}
+	public void setDepartName(String departName) {
+		this.departName = departName;
 	}
 }

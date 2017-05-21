@@ -13,15 +13,32 @@
         <result property="status" column="status"/>
         <result property="maxNum" column="max_num"/>
         <result property="createUser" column="create_user"/>
+        <result property="exploreNum" column="explore_num"/>
     </resultMap>
 
 	<select id="queryObject" resultType="io.renren.entity.VoteActivityEntity">
-		select * from vote_activity where id = #{value}
+		select id,vote_name,vote_desc,DATE_FORMAT(begin_time,'%Y-%m-%d') as begin_time,DATE_FORMAT(end_time, '%Y-%m-%d %H:%i:%S') AS end_time,status,max_num,create_user,explore_num from vote_activity where id = #{value}
+	</select>
+
+	<select id="queryActiveObject" resultType="io.renren.entity.VoteActivityEntity">
+		select id,vote_name,vote_desc,DATE_FORMAT(begin_time,'%Y-%m-%d') as begin_time,DATE_FORMAT(end_time, '%Y-%m-%d') AS end_time,status,max_num,create_user,explore_num from vote_activity
+		 where 1=1 and status='1'
+		 <if test="value!=null and value!=''">
+			 and id = #{value}
+		 </if>
+		 limit 0,1
 	</select>
 
 	<select id="queryList" resultType="io.renren.entity.VoteActivityEntity">
-		select * from vote_activity
+		select id,vote_name,vote_desc,DATE_FORMAT(begin_time,'%Y-%m-%d') as begin_time,DATE_FORMAT(end_time, '%Y-%m-%d %H:%i:%S') AS end_time,	case STATUS
+   when '1'then '进行中'
+    when '0' then '已停用'
+  end as status,max_num,create_user from vote_activity
+		where 1=1 
         <choose>
+        <when test="voteName != null">
+         and vote_name like  CONCAT(CONCAT('%', #{voteName}), '%') 
+        </when>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
             </when>
@@ -35,7 +52,10 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from vote_activity 
+		select count(*) from vote_activity where 1=1
+        <if test="voteName != null">
+         and vote_name like  CONCAT(CONCAT('%', #{voteName}), '%') 
+        </if>
 	</select>
 	 
 	<insert id="save" parameterType="io.renren.entity.VoteActivityEntity" useGeneratedKeys="true" keyProperty="id">
@@ -55,7 +75,7 @@
 			#{voteDesc}, 
 			#{beginTime}, 
 			#{endTime}, 
-			#{status}, 
+			'1', 
 			#{maxNum}, 
 			#{createUser}
 		)
@@ -74,13 +94,30 @@
 		</set>
 		where id = #{id}
 	</update>
+	 
+	<update id="sumExploreNum" parameterType="io.renren.entity.VoteActivityEntity">
+		update vote_activity 
+		set explore_num=explore_num+1
+		where id = #{value}
+	</update>
 	
 	<delete id="delete">
-		delete from vote_activity where id = #{value}
+		update  vote_activity set status='0' where id = #{value}
+	</delete>
+	
+	<delete id="delete2">
+		update  vote_activity set status='1' where id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from vote_activity where id in 
+		update  vote_activity set status='0' where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteBatch2">
+		update  vote_activity set status='1' where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

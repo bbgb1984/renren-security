@@ -42,10 +42,18 @@
 	    <property name="filterChainDefinitions">  
 	        <value>
 	        	/statics/**=anon
+	        	/js/**=anon
+	        	/imgs/**=anon
 				/api/**=anon
 	        	/login.html=anon
 	        	/sys/login=anon
+	        	/voteactivityresult/save=anon
 	        	/captcha.jpg=anon
+	        	/activity_index.html=anon
+	        	/activity_ranking.html=anon
+	        	/commentTopTen.html=anon
+	        	/highRateTopTen.html=anon
+	        	/queryCommentResultDetail.html=anon
 	        	/**=authc
 	        </value>
 	    </property>

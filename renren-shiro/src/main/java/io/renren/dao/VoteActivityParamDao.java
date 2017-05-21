@@ -1,5 +1,7 @@
 package io.renren.dao;
 
+import java.util.List;
+
 import io.renren.entity.VoteActivityParamEntity;
 
 /**
@@ -10,5 +12,7 @@ import io.renren.entity.VoteActivityParamEntity;
  * @date 2017-05-16 20:56:18
  */
 public interface VoteActivityParamDao extends BaseDao<VoteActivityParamEntity> {
+	
+	public List<VoteActivityParamEntity> queryObjectByActivityId(Object id);
 	
 }

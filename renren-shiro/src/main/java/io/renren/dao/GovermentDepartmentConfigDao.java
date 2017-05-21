@@ -1,5 +1,7 @@
 package io.renren.dao;
 
+import java.util.List;
+
 import io.renren.entity.GovermentDepartmentConfigEntity;
 
 /**
@@ -10,5 +12,5 @@ import io.renren.entity.GovermentDepartmentConfigEntity;
  * @date 2017-05-16 20:56:17
  */
 public interface GovermentDepartmentConfigDao extends BaseDao<GovermentDepartmentConfigEntity> {
-	
+	List<GovermentDepartmentConfigEntity> queryAllList(Object searchName);
 }

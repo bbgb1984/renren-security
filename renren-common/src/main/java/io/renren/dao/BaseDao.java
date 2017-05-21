@@ -24,15 +24,23 @@ public interface BaseDao<T> {
 	
 	int delete(Object id);
 	
+	int delete2(Object id);
+	
 	int delete(Map<String, Object> map);
 	
+	int delete2(Map<String, Object> map);
+	
 	int deleteBatch(Object[] id);
+	
+	int deleteBatch2(Object[] id);
 
 	T queryObject(Object id);
 	
 	T queryObjectByName(Object obj);
 	
 	List<T> queryList(Map<String, Object> map);
+	
+	List<T> categorylist();
 	
 	List<T> queryList(Object id);
 	

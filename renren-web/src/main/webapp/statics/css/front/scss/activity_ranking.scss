@@ -1,0 +1,81 @@
+@import "reset";
+@import "var";
+
+/*content*/
+.content{
+  .content-item{
+    padding:0 20px;
+    border-bottom: 1px solid #cccccc;
+    >.pull-left{
+      .active-title{
+        h1{
+          @include commonh1;
+          height: 50px;
+          line-height: 50px;
+        }
+        border-bottom: 1px solid #cccccc;
+      }
+      .active-rank{
+        ul{
+          font-size: 14px;
+          padding:15px;
+          li{
+            margin-bottom: 10px;
+            a{
+              display: block;
+              width:295px;
+              >.pull-left{
+                line-height: 20px;
+                i{
+                  margin-right:10px;
+                  display: block;
+                  width:20px;
+                  height: 20px;
+                  line-height: 20px;
+                  text-align: center;
+                  background-color: $mainColor;
+                  color: #ffffff;
+                  border-radius: 50%;
+                }
+                span.pull-left{
+                  width:150px;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;
+                }
+              }
+              >.pull-right{
+                width:115px;
+                line-height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+    >.pull-right{
+      width:620px;
+      padding-top:15px;
+      .chart{
+        height: 351px;
+      }
+    }
+    .average{
+      .active-title{
+        h1{
+          @include commonh1;
+          height: 50px;
+          line-height: 50px;
+        }
+      }
+      .chart{
+        height: 550px;
+      }
+      .average-rank{
+        margin-bottom:20px;
+        @extend %vartable;
+      }
+    }
+  }
+
+}

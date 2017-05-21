@@ -16,11 +16,13 @@ public interface VoteActivityParamService {
 	
 	VoteActivityParamEntity queryObject(Long id);
 	
-	List<VoteActivityParamEntity> queryList(Map<String, Object> map);
+	List<VoteActivityParamEntity> queryList(Long id);
+	
+	List<VoteActivityParamEntity> queryObjectByActivityId(Object id);
 	
 	int queryTotal(Map<String, Object> map);
 	
-	void save(VoteActivityParamEntity voteActivityParam);
+	void save(VoteActivityParamEntity[] voteActivityParam);
 	
 	void update(VoteActivityParamEntity voteActivityParam);
 	

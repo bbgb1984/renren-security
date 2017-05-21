@@ -22,15 +22,17 @@ public class VoteActivityEntity implements Serializable {
 	//评价活动描述
 	private String voteDesc;
 	//开始时间
-	private Date beginTime;
+	private String beginTime;
 	//开始时间
-	private Date endTime;
+	private String endTime;
 	//状态 1：生效；0：无效
 	private String status;
 	//个人最多可评价单位个数
-	private Integer maxNum;
+	private String maxNum;
 	//创建者
 	private Long createUser;
+	//创建者
+	private Long exploreNum;
 
 	/**
 	 * 设置：
@@ -71,25 +73,25 @@ public class VoteActivityEntity implements Serializable {
 	/**
 	 * 设置：开始时间
 	 */
-	public void setBeginTime(Date beginTime) {
+	public void setBeginTime(String beginTime) {
 		this.beginTime = beginTime;
 	}
 	/**
 	 * 获取：开始时间
 	 */
-	public Date getBeginTime() {
+	public String getBeginTime() {
 		return beginTime;
 	}
 	/**
 	 * 设置：开始时间
 	 */
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	/**
 	 * 获取：开始时间
 	 */
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 	/**
@@ -107,13 +109,13 @@ public class VoteActivityEntity implements Serializable {
 	/**
 	 * 设置：个人最多可评价单位个数
 	 */
-	public void setMaxNum(Integer maxNum) {
+	public void setMaxNum(String maxNum) {
 		this.maxNum = maxNum;
 	}
 	/**
 	 * 获取：个人最多可评价单位个数
 	 */
-	public Integer getMaxNum() {
+	public String getMaxNum() {
 		return maxNum;
 	}
 	/**
@@ -127,5 +129,11 @@ public class VoteActivityEntity implements Serializable {
 	 */
 	public Long getCreateUser() {
 		return createUser;
+	}
+	public Long getExploreNum() {
+		return exploreNum;
+	}
+	public void setExploreNum(Long exploreNum) {
+		this.exploreNum = exploreNum;
 	}
 }

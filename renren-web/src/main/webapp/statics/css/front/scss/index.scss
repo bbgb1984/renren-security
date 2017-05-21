@@ -1,0 +1,299 @@
+@import "reset";
+@import "var";
+
+
+/*activetop*/
+.activetop{
+  padding:30px;
+  border-bottom: 1px solid #cccccc;
+  .active-title{
+    .active-title-left{
+      h1{
+        @include commonh1;
+        margin-bottom: 15px;
+      }
+      .activetime{
+        color: #cccccc;
+        font-size: 14px;
+      }
+      .activebtn{
+        a{
+          @include commonBtn;
+        }
+      }
+
+    }
+    .active-title-right{
+      table{
+        text-align: center;
+        thead{
+          background-color: $mainColor;
+          color: #ffffff;
+          td{
+            height: 40px;
+          }
+        }
+        tbody{
+          td{
+            height: 72px;
+          }
+        }
+        td{
+          border:1px solid #000 ;
+        }
+      }
+      .erweima{
+        height: 115px;
+
+      }
+    }
+  }
+  .active-info{
+    border-radius: 4px;
+    background-color: #eeeeee;
+    padding:15px;
+    margin-top: 20px;
+    p{
+      text-indent: 2em;
+      font-size: 14px;
+      line-height: 1.5em;
+    }
+  }
+}
+
+/*units*/
+.units{
+  padding:20px 30px;
+  border-bottom: 1px solid #cccccc;
+  .units-title{
+    h1{
+      @include commonh1;
+
+    }
+  }
+  .units-category{
+    background-color: #eeeeee;
+    margin-top: 15px;
+    padding:15px 30px 15px 30px;
+    .pull-left{
+      a{
+        padding:0 10px;
+      }
+    }
+    .pull-right{
+      position: relative;
+      .fa{
+        position: absolute;
+        top:50%;
+        left:10px;
+        color: #cccccc;
+        font-size: 22px;
+        margin-top: -11px;
+      }
+      input{
+        height: 30px;
+        border-radius: 4px;
+        border:1px solid #cccccc;
+        padding-left: 40px;
+      }
+    }
+  ;
+  }
+  .units-details{
+    background: #f9f9f9;
+    padding:15px;
+    padding-bottom:0;
+    .units-details-item{
+      display: block;
+      width:205px;
+      margin-right:30px;
+      margin-bottom:20px;
+      .udi-img{
+        height: 40px;
+        width: 40px;
+      }
+      .udi-title {
+        height: 40px;
+        position: relative;
+        p {
+          line-height: 1.2em;
+          position: absolute;
+          top:50%;
+          left:50px;
+          -webkit-transform: translateY(-50%);
+          -moz-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+      }
+    }
+    .units-details-item:nth-of-type(4n){
+      margin-right:0;
+    }
+  }
+}
+
+.evaluate{
+  position: fixed;
+  top:0;
+  left:0;
+  background: rgba(0,0,0,.7);
+  width:100%;
+  .evaluate-wrap{
+    background-color: #fff;
+    padding:40px 50px;
+    width:540px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top: -248px;
+    margin-left: -320px;
+    .evaluate-wrap-title{
+      h3{
+        text-align: center;
+        font:16px/1em $mis;
+        font-weight: bold;
+      }
+      p{
+        font-size: 14px;
+        height: 14px;
+        color: #cf0d00;
+        text-align: center;
+        margin-top:10px;
+      }
+    }
+    .evaluate-wrap-detals{
+      ul{
+        margin-top:25px;
+        li{
+          margin:12px 0;
+          .pull-left{}
+          .pull-right{
+            input{
+              margin:0 5px;
+            }
+          }
+          .suggestion{
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            margin-top: 20px;
+          }
+          .tip{
+            text-align: right;
+            span{
+              font-size: 24px;
+              font-style: italic;
+              font-family: "Bodoni MT",Didot,"Didot LT STD","Hoefler Text",serif;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    .evaluate-wrap-sub{
+      button{
+        @include commonBtn;
+        margin:0 auto;
+      }
+    }
+    .fa-close{
+      @extend %fa-close;
+    }
+  }
+}
+
+.unitrank{
+  padding:30px;
+  border-bottom: 1px solid #cccccc;
+  .statistics{
+    margin-bottom: 30px;
+    p{
+      @include commonh1;
+    }
+    table{
+      margin-top:15px;
+      thead{
+        height: 45px;
+        line-height: 45px;
+        background-color: $mainColor;
+        color: #ffffff;
+        text-align: center;
+        td{
+          border:1px solid #fff;
+          .fa{
+            font-size: 22px;
+            padding-left:8px;
+            position: relative;
+            top:3px;
+          }
+        }
+        .re-rank{
+          cursor: pointer;
+          &:hover{
+            background-color: #C61000;
+
+          }
+        }
+      }
+      tbody{
+        text-align: center;
+        td{
+          height: 40px;
+          line-height: 40px;
+          border:1px solid #cccccc;
+        }
+      }
+    }
+  }
+  .rank{
+    p{
+      @include commonh1;
+    }
+    @extend %vartable;
+  }
+}
+
+/*login*/
+.login{
+  position: fixed;
+  top:0;
+  left:0;
+  background: rgba(0,0,0,.7);
+  width:100%;
+  .loginwrap{
+    background-color: #fff;
+    width:360px;
+    height: 280px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    border-radius: 6px;
+    margin-top: -140px;
+    margin-left: -180px;
+    h2{
+      @include commonh1;
+      text-align: center;
+      padding:20px 0 25px 0;
+    }
+    .login-erweima{
+      width:130px;
+      height: 130px;
+      margin:0 auto;
+    }
+    .login-btn{
+      margin-top:25px;
+      button{
+        @include commonBtn;
+        margin:0 auto;
+        width:80%;
+      }
+    }
+    .login-close{
+      @extend %fa-close;
+    }
+  }
+}

@@ -1,9 +1,21 @@
 package io.renren.controller;
 
+import io.renren.entity.GovermentDepartmentCategoryEntity;
+import io.renren.service.GovermentDepartmentCategoryService;
+import io.renren.utils.Constant;
+import io.renren.utils.PageUtils;
+import io.renren.utils.Query;
+import io.renren.utils.R;
+import io.renren.utils.RRException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.renren.entity.GovermentDepartmentCategoryEntity;
-import io.renren.service.GovermentDepartmentCategoryService;
-import io.renren.utils.Constant;
-import io.renren.utils.PageUtils;
-import io.renren.utils.Query;
-import io.renren.utils.R;
-import io.renren.utils.RRException;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 政府部门设置
@@ -55,6 +61,20 @@ public class GovermentDepartmentCategoryController extends AbstractController {
 				total, query.getLimit(), query.getPage());
 
 		return R.ok().put("page", pageUtil);
+	}
+	
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/categorylist")
+	@RequiresAuthentication 
+	public R categorylist() {
+		
+		List<GovermentDepartmentCategoryEntity> govermentDepartmentCategoryList = govermentDepartmentCategoryService
+				.categorylist();
+		String json=JSON.toJSONString(govermentDepartmentCategoryList);
+		System.out.println(json);
+		return R.ok().put("list", govermentDepartmentCategoryList);
 	}
 
 	/**

@@ -63,6 +63,7 @@ public class GovermentDepartmentConfigController  extends AbstractController {
 		return R.ok().put("govermentDepartmentConfig", govermentDepartmentConfig);
 	}
 	
+	
 	/**
 	 * 保存
 	 */

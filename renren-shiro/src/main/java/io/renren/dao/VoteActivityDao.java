@@ -11,4 +11,7 @@ import io.renren.entity.VoteActivityEntity;
  */
 public interface VoteActivityDao extends BaseDao<VoteActivityEntity> {
 	
+	VoteActivityEntity queryActiveObject(Object id);
+
+	public void sumExploreNum(Long id);
 }

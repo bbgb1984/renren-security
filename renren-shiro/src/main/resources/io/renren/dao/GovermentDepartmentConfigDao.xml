@@ -41,7 +41,7 @@
 		1 = 1
 		<choose>
 			<when test="name != null">
-				and t.name like contact(contact('%',#{name}) ,'%')
+				and t.name like CONCAT(CONCAT('%',#{name}) ,'%')
 			</when>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -54,11 +54,32 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	
+	<select id="queryAllList" resultType="io.renren.entity.GovermentDepartmentConfigEntity">
+		SELECT
+		t.id,
+		t. NAME,
+		t. STATUS,
+		t.type,
+		c.category_name 
+		FROM
+		goverment_department_config t
+		LEFT JOIN goverment_department_category c
+		on t.type = c.id
+		where 1=1 
+		<if test="name!=null and name.trim()!=''">
+			and t.name like CONCAT(CONCAT('%',#{name}),'%')
+		</if>
+		<if test="type!=null and type.trim()!=''">
+			and t.type =${type}
+		</if>
+		order by t.id asc
+	</select>
 
 	<select id="queryTotal" resultType="int">
 		select count(*) from goverment_department_config where 1=1
 		<if test="name != null">
-			and name like contact(contact('%',#{name}) ,'%')
+			and name like CONCAT(CONCAT('%',#{name}) ,'%')
 		</if>
 	</select>
 
@@ -90,12 +111,12 @@
 	</update>
 
 	<delete id="delete">
-		delete from goverment_department_config where id =
+		update  goverment_department_config set status='0' where id =
 		#{value}
 	</delete>
 
 	<delete id="deleteBatch">
-		delete from goverment_department_config where id in
+		update  goverment_department_config set status='0' where id in
 		<foreach item="id" collection="array" open="(" separator=","
 			close=")">
 			#{id}

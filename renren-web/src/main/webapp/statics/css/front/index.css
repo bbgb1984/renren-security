@@ -1,0 +1,492 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  /* vertical-align: baseline;*/
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.clearfix:after, .clearfix:before {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+a {
+  outline-style: none;
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2bacfe;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.ml15 {
+  margin-left: 15px;
+}
+
+.mr15 {
+  margin-right: 15px;
+}
+
+.mt15 {
+  margin-top: 15px;
+}
+
+.mb15 {
+  margin-bottom: 15px;
+}
+
+.m15 {
+  margin: 0 15px;
+}
+
+.pl15 {
+  padding-left: 15px;
+}
+
+.pr15 {
+  padding-right: 15px;
+}
+
+.p15 {
+  padding: 0 15px;
+}
+
+.rel {
+  position: relative;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.box-center {
+  margin: 0 auto;
+}
+
+.unitrank .rank table {
+  margin-top: 15px;
+}
+.unitrank .rank table thead {
+  height: 45px;
+  line-height: 45px;
+  background-color: #A60D00;
+  color: #ffffff;
+  text-align: center;
+}
+.unitrank .rank table thead td .fa {
+  font-size: 22px;
+  padding-left: 8px;
+  position: relative;
+  top: 1px;
+  left: -4px;
+}
+.unitrank .rank table thead .re-rank {
+  cursor: pointer;
+}
+.unitrank .rank table thead .re-rank:hover {
+  background-color: #C61000;
+}
+.unitrank .rank table tbody {
+  text-align: center;
+}
+.unitrank .rank table tbody tr {
+  background: #ffffff;
+}
+.unitrank .rank table tbody td {
+  height: 40px;
+  line-height: 40px;
+}
+
+.evaluate .evaluate-wrap .fa-close, .login .loginwrap .login-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 30px;
+  cursor: pointer;
+}
+.evaluate .evaluate-wrap .fa-close:hover, .login .loginwrap .login-close:hover {
+  color: #eeeeee;
+}
+
+/*activetop*/
+.activetop {
+  padding: 30px;
+  border-bottom: 1px solid #cccccc;
+}
+.activetop .active-title .active-title-left h1 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.activetop .active-title .active-title-left .activetime {
+  color: #cccccc;
+  font-size: 14px;
+}
+.activetop .active-title .active-title-left .activebtn a {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  width: 140px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #A60D00;
+  margin-top: 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.activetop .active-title .active-title-left .activebtn a:hover {
+  text-decoration: none;
+  background-color: #8f0d00;
+}
+.activetop .active-title .active-title-right table {
+  text-align: center;
+}
+.activetop .active-title .active-title-right table thead {
+  background-color: #A60D00;
+  color: #ffffff;
+}
+.activetop .active-title .active-title-right table thead td {
+  height: 40px;
+}
+.activetop .active-title .active-title-right table tbody td {
+  height: 72px;
+}
+.activetop .active-title .active-title-right table td {
+  border: 1px solid #000;
+}
+.activetop .active-title .active-title-right .erweima {
+  height: 115px;
+}
+.activetop .active-info {
+  border-radius: 4px;
+  background-color: #eeeeee;
+  padding: 15px;
+  margin-top: 20px;
+}
+.activetop .active-info p {
+  text-indent: 2em;
+  font-size: 14px;
+  line-height: 1.5em;
+}
+
+/*units*/
+.units {
+  padding: 20px 30px;
+  border-bottom: 1px solid #cccccc;
+}
+.units .units-title h1 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.units .units-category {
+  background-color: #eeeeee;
+  margin-top: 15px;
+  padding: 15px 30px 15px 30px;
+}
+.units .units-category .pull-left a {
+  padding: 0 10px;
+}
+.units .units-category .pull-right {
+  position: relative;
+}
+.units .units-category .pull-right .fa {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: #cccccc;
+  font-size: 22px;
+  margin-top: -11px;
+}
+.units .units-category .pull-right input {
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid #cccccc;
+  padding-left: 40px;
+}
+.units .units-details {
+  background: #f9f9f9;
+  padding: 15px;
+  padding-bottom: 0;
+}
+.units .units-details .units-details-item {
+  display: block;
+  width: 205px;
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+.units .units-details .units-details-item .udi-img {
+  height: 40px;
+  width: 40px;
+}
+.units .units-details .units-details-item .udi-title {
+  height: 40px;
+  position: relative;
+}
+.units .units-details .units-details-item .udi-title p {
+  line-height: 1.2em;
+  position: absolute;
+  top: 50%;
+  left: 50px;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.units .units-details .units-details-item:nth-of-type(4n) {
+  margin-right: 0;
+}
+
+.evaluate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+}
+.evaluate .evaluate-wrap {
+  background-color: #fff;
+  padding: 40px 50px;
+  width: 540px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -248px;
+  margin-left: -320px;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-title h3 {
+  text-align: center;
+  font: 16px/1em "微软雅黑";
+  font-weight: bold;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-title p {
+  font-size: 14px;
+  height: 14px;
+  color: #cf0d00;
+  text-align: center;
+  margin-top: 10px;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul {
+  margin-top: 25px;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul li {
+  margin: 12px 0;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul li .pull-right input {
+  margin: 0 5px;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul li .suggestion {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  margin-top: 20px;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul li .tip {
+  text-align: right;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-detals ul li .tip span {
+  font-size: 24px;
+  font-style: italic;
+  font-family: "Bodoni MT",Didot,"Didot LT STD","Hoefler Text",serif;
+  font-weight: bold;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-sub button {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  width: 140px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #A60D00;
+  margin-top: 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.evaluate .evaluate-wrap .evaluate-wrap-sub button:hover {
+  text-decoration: none;
+  background-color: #8f0d00;
+}
+
+.unitrank {
+  padding: 30px;
+  border-bottom: 1px solid #cccccc;
+}
+.unitrank .statistics {
+  margin-bottom: 30px;
+}
+.unitrank .statistics p {
+  font-size: 16px;
+  font-weight: bold;
+}
+.unitrank .statistics table {
+  margin-top: 15px;
+}
+.unitrank .statistics table thead {
+  height: 45px;
+  line-height: 45px;
+  background-color: #A60D00;
+  color: #ffffff;
+  text-align: center;
+}
+.unitrank .statistics table thead td {
+  border: 1px solid #fff;
+}
+.unitrank .statistics table thead td .fa {
+  font-size: 22px;
+  padding-left: 8px;
+  position: relative;
+  top: 3px;
+}
+.unitrank .statistics table thead .re-rank {
+  cursor: pointer;
+}
+.unitrank .statistics table thead .re-rank:hover {
+  background-color: #C61000;
+}
+.unitrank .statistics table tbody {
+  text-align: center;
+}
+.unitrank .statistics table tbody td {
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #cccccc;
+}
+.unitrank .rank p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/*login*/
+.login {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+}
+.login .loginwrap {
+  background-color: #fff;
+  width: 360px;
+  height: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 6px;
+  margin-top: -140px;
+  margin-left: -180px;
+}
+.login .loginwrap h2 {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px 0 25px 0;
+}
+.login .loginwrap .login-erweima {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+}
+.login .loginwrap .login-btn {
+  margin-top: 25px;
+}
+.login .loginwrap .login-btn button {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  width: 140px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #A60D00;
+  margin-top: 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto;
+  width: 80%;
+}
+.login .loginwrap .login-btn button:hover {
+  text-decoration: none;
+  background-color: #8f0d00;
+}
+
+/*# sourceMappingURL=index.css.map */

@@ -1,8 +1,20 @@
 package io.renren.controller;
 
+import io.renren.entity.VoteActivityEntity;
+import io.renren.enums.StatusEnum;
+import io.renren.service.VoteActivityService;
+import io.renren.utils.PageUtils;
+import io.renren.utils.Query;
+import io.renren.utils.R;
+import io.renren.utils.RRException;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.renren.entity.VoteActivityEntity;
-import io.renren.service.VoteActivityService;
-import io.renren.utils.PageUtils;
-import io.renren.utils.Query;
-import io.renren.utils.R;
 
 
 /**
@@ -66,6 +72,8 @@ public class VoteActivityController  extends AbstractController {
 	@RequestMapping("/save")
 	@RequiresPermissions("voteactivity:save")
 	public R save(@RequestBody VoteActivityEntity voteActivity){
+		
+		validatetData(voteActivity,1);
 		voteActivityService.save(voteActivity);
 		
 		return R.ok();
@@ -77,6 +85,8 @@ public class VoteActivityController  extends AbstractController {
 	@RequestMapping("/update")
 	@RequiresPermissions("voteactivity:update")
 	public R update(@RequestBody VoteActivityEntity voteActivity){
+		validatetData(voteActivity,2);
+
 		voteActivityService.update(voteActivity);
 		
 		return R.ok();
@@ -87,10 +97,73 @@ public class VoteActivityController  extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("voteactivity:delete")
-	public R delete(@RequestBody Long[] ids){
-		voteActivityService.deleteBatch(ids);
+	public R delete(@RequestBody Long[] ids,HttpServletRequest request){
+		if(StringUtils.equals("1", request.getParameter("flag"))){
+			voteActivityService.startBatch(ids);
+		}else{
+			voteActivityService.stopBatch(ids);
+		}
 		
 		return R.ok();
 	}
 	
+	/**
+	 * @param entity
+	 */
+	private void validatetData(VoteActivityEntity entity,int flag){
+		if (flag == 1) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("1", "1");
+			Query query = new Query(params);
+			List<VoteActivityEntity> voteActivityList = voteActivityService
+					.queryList(query);
+			if (voteActivityList != null && voteActivityList.size() > 0) {
+				for (VoteActivityEntity e : voteActivityList) {
+					if (StringUtils.equals(StatusEnum.ING.getName(),
+							e.getStatus())) {
+						throw new RRException("评价活动只能创建一个");
+					}
+				}
+			}
+		}
+		if(StringUtils.isBlank(entity.getVoteName())){
+			throw new RRException("评价活动名称不能为空");
+		}
+		if(StringUtils.length(entity.getVoteName())>50){
+			throw new RRException("评价活动名称不能超过50个汉字");
+		}
+		if(StringUtils.isBlank(entity.getVoteDesc())){
+			throw new RRException("评价活动描述不能为空");
+		}
+		if(StringUtils.length(entity.getVoteDesc())>200){
+			throw new RRException("评价活动描述不能超过200个汉字");
+		}
+		if(StringUtils.isBlank(entity.getBeginTime())){
+			throw new RRException("开始时间不能为空");
+		}
+		if(StringUtils.isBlank(entity.getEndTime())){
+			String startTime=entity.getBeginTime();
+			entity.setEndTime(startTime.substring(0,4)+"-12-31 23:59:59");
+		}else{
+			entity.setEndTime(entity.getEndTime()+" 23:59:59");
+		}
+		int maxNum;
+		try{
+			maxNum=Integer.parseInt(entity.getMaxNum());
+		}catch(Exception e){
+			throw new RRException("评价单位个数必须为数字");
+		}
+		if(StringUtils.isBlank(entity.getMaxNum())){
+			throw new RRException("评价单位个数必须大于0");
+		}
+		if(maxNum<1){
+			throw new RRException("评价单位个数必须大于0");
+		}
+	}
+	
+	public static void main(String[] args) {
+		String startTime="2017-12-01";
+		
+		System.out.println(startTime.substring(0,4)+"-12-31 23:59:59");
+	}
 }

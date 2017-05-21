@@ -15,19 +15,17 @@
 		select * from vote_activity_param where id = #{value}
 	</select>
 
+	<select id="queryObjectByActivityId" resultMap="voteActivityParamMap">
+		select * from vote_activity_param where vote_activity_id = #{value} order by id asc
+	</select>
+
 	<select id="queryList" resultType="io.renren.entity.VoteActivityParamEntity">
 		select * from vote_activity_param
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
-			<otherwise>
-                order by id desc
-			</otherwise>
-        </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
+        where 1=1 
+        <if test="id!=null">
+        	and vote_activity_id=#{id}
+        </if>
+        order by id asc
 	</select>
 	
  	<select id="queryTotal" resultType="int">

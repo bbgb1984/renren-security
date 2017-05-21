@@ -4,65 +4,233 @@
 <mapper namespace="io.renren.dao.VoteActivityResultDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.renren.entity.VoteActivityResultEntity" id="voteActivityResultMap">
-        <result property="id" column="id"/>
-        <result property="voteActivityId" column="vote_activity_id"/>
-        <result property="departId" column="depart_id"/>
-        <result property="voteActivityParamId" column="vote_activity_param_id"/>
-        <result property="voteActivityParamVal" column="vote_activity_param_val"/>
-        <result property="userId" column="user_id"/>
-        <result property="voteTime" column="vote_time"/>
-        <result property="status" column="status"/>
-    </resultMap>
+	<resultMap type="io.renren.entity.VoteActivityResultEntity"
+		id="voteActivityResultMap">
+		<result property="id" column="id" />
+		<result property="voteActivityId" column="vote_activity_id" />
+		<result property="departId" column="depart_id" />
+		<result property="voteActivityParamId" column="vote_activity_param_id" />
+		<result property="voteActivityParamVal" column="vote_activity_param_val" />
+		<result property="userId" column="user_id" />
+		<result property="voteTime" column="vote_time" />
+		<result property="status" column="status" />
+		<result property="commentDesc" column="comment_desc" />
+		<result property="departName" column="depart_name" />
+
+	</resultMap>
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="io.renren.entity.VoteRankingVo" id="voteActivityRateResultMap">
+		<result property="totalRate" column="totalRate" />
+		<result property="commentNum" column="commentNum" />
+		<result property="departName" column="departName" />
+		<result property="paramName" column="paramName" />
+		<result property="departId" column="departId" />
+
+	</resultMap>
+
+	<select id="queryMaxCommentTopTen" resultType="io.renren.entity.VoteRankingVo">
+		select count(1) as
+		commentNum,t.`name` as departName,t.id as departId from (
+		select
+		DISTINCT user_id,g.`name`,g.id
+		from vote_activity_result r,
+		goverment_department_config g
+
+		where r.depart_id=g.id
+		and
+		r.vote_activity_id=#{value}
+		)t
+		group by departName order by commentNum
+		desc limit 0,10
+
+	</select>
+
+	<select id="queryCommentResultDetail" resultType="io.renren.entity.VoteRankingVo">
+		SELECT
+		x.`param_name` AS paramName,
+		FORMAT(x.good / y.total, 2) * 100 AS totalRate,
+		y.total AS commentNum
+		FROM
+		(
+		SELECT
+		count(1) AS good,
+		t.param_name,
+		t.id
+		FROM
+		(
+		SELECT DISTINCT
+		p.param_name,
+		r.user_id,
+		p.id
+		FROM
+		vote_activity_result r,
+		vote_activity_param p,
+		goverment_department_config g
+		WHERE
+		r.vote_activity_param_id = p.id
+		AND r.depart_id = g.id
+		AND r.vote_activity_param_val = '1'
+		AND r.vote_activity_id = #{activityId}
+		AND g.id = #{departId} 
+		) t
+		GROUP BY
+		param_name
+		) x,
+		(
+		SELECT
+		count(1) AS total,
+		t.param_name,
+		t.id
+		FROM
+		(
+		SELECT DISTINCT
+		p.param_name,
+		r.user_id,
+		p.id
+		FROM
+		vote_activity_result r,
+		vote_activity_param p,
+		goverment_department_config g
+		WHERE
+		r.vote_activity_param_id = p.id
+		AND r.depart_id = g.id 
+		AND r.vote_activity_id = #{activityId}
+		AND g.id = #{departId}
+		) t
+		GROUP BY
+		param_name
+		) y
+		WHERE
+		x.id = y.id
+		order by x.id ASC
+	</select>
+
+
+	<select id="queryCommentTopTen" resultType="io.renren.entity.VoteRankingVo">
+		select
+		count(1) as
+		commentNum ,t.`name` as departName
+		from(
+		SELECT DISTINCT
+		result.vote_activity_id,
+		depart.`name`,
+		result.user_id
+		FROM
+		vote_activity_result result,
+		goverment_department_config depart
+		WHERE
+		result.depart_id = depart.id
+		AND result.vote_activity_id = #{value}
+		)t
+		group by t.`name` order by commentNum DESC limit 0,10
+	</select>
+
+	<select id="queryHighCommentRateTopTen" resultType="io.renren.entity.VoteRankingVo">
+		SELECT
+		x.`name` as departName,FORMAT(x.good/y.total,2)*100 as
+		totalRate,x.good as commentNum
+		from (
+		select
+		g.`name`,COUNT(1) as
+		good,g.id
+		from vote_activity_result r,vote_activity_param p,
+		goverment_department_config g
+
+		where r.vote_activity_param_id=p.id
+		and
+		r.depart_id=g.id and r.vote_activity_param_val='1'
+		and
+		r.vote_activity_id=#{value}
+		group by g.`name` order by good desc limit
+		0,10
+		)x,(
+
+		select
+		g.id,COUNT(1) as total
+		from vote_activity_result
+		r,vote_activity_param p,
+		goverment_department_config g
+
+		where
+		r.vote_activity_param_id=p.id
+		and r.depart_id=g.id
+		and
+		r.vote_activity_id=#{value}
+		group by g.`id`)y
+		where x.id=y.id order by
+		totalRate desc
+	</select>
 
 	<select id="queryObject" resultType="io.renren.entity.VoteActivityResultEntity">
-		select * from vote_activity_result where id = #{value}
+		select * from
+		vote_activity_result where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.renren.entity.VoteActivityResultEntity">
 		select * from vote_activity_result
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from vote_activity_result 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		vote_activity_result
 	</select>
-	 
-	<insert id="save" parameterType="io.renren.entity.VoteActivityResultEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<select id="queryCommentNumById" resultType="int">
+		select
+		count(distinct user_id) from vote_activity_result where
+		vote_activity_id=#{id}
+	</select>
+
+	<select id="queryCommentDepartsNum" resultType="int">
+		select
+		count(distinct depart_id) from vote_activity_result where
+		vote_activity_id=#{activityId} and user_id=#{userId}
+	</select>
+
+	<select id="queryActivityCommentByUserID" resultType="int">
+		select
+		count(1) from vote_activity_result where
+		vote_activity_id=#{activityId} and user_id=#{userId} and
+		depart_id=#{departId}
+	</select>
+
+	<insert id="save" parameterType="io.renren.entity.VoteActivityResultEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into vote_activity_result
 		(
-			`vote_activity_id`, 
-			`depart_id`, 
-			`vote_activity_param_id`, 
-			`vote_activity_param_val`, 
-			`user_id`, 
-			`vote_time`, 
-			`status`
+		`vote_activity_id`,
+		`depart_id`,
+		`vote_activity_param_id`,
+		`vote_activity_param_val`,
+		`user_id`,
+		`vote_time`,
+		`status`
 		)
 		values
 		(
-			#{voteActivityId}, 
-			#{departId}, 
-			#{voteActivityParamId}, 
-			#{voteActivityParamVal}, 
-			#{userId}, 
-			#{voteTime}, 
-			#{status}
+		#{voteActivityId},
+		#{departId},
+		#{voteActivityParamId},
+		#{voteActivityParamVal},
+		#{userId},
+		#{voteTime},
+		#{status}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.renren.entity.VoteActivityResultEntity">
-		update vote_activity_result 
+		update vote_activity_result
 		<set>
 			<if test="voteActivityId != null">`vote_activity_id` = #{voteActivityId}, </if>
 			<if test="departId != null">`depart_id` = #{departId}, </if>
@@ -74,16 +242,36 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from vote_activity_result where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from vote_activity_result where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from vote_activity_result where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>
+
+	<insert id="saveBatch" useGeneratedKeys="true" keyProperty="id">
+		insert into vote_activity_result
+		(
+		`vote_activity_id`,
+		`depart_id`,
+		`vote_activity_param_id`,
+		`vote_activity_param_val`,
+		`user_id`,
+		`vote_time`,
+		`status`,
+		`comment_desc`
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.voteActivityId},#{item.departId},#{item.voteActivityParamId},#{item.voteActivityParamVal},#{item.userId},SYSDATE(),'1',#{item.commentDesc})
+		</foreach>
+	</insert>
 
 </mapper>

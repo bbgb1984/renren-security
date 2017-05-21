@@ -16,6 +16,8 @@ public interface VoteActivityService {
 	
 	VoteActivityEntity queryObject(Long id);
 	
+	VoteActivityEntity queryActiveObject(String id);
+	
 	List<VoteActivityEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
@@ -24,7 +26,13 @@ public interface VoteActivityService {
 	
 	void update(VoteActivityEntity voteActivity);
 	
-	void delete(Long id);
+	void stop(Long id);
 	
-	void deleteBatch(Long[] ids);
+	void start(Long id);
+	
+	void stopBatch(Long[] ids);
+	
+	void startBatch(Long[] ids);
+	
+	void sumExploreNum(Long id);
 }

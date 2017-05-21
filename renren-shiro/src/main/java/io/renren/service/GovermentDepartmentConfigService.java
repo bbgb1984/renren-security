@@ -20,6 +20,8 @@ public interface GovermentDepartmentConfigService {
 	
 	List<GovermentDepartmentConfigEntity> queryList(Map<String, Object> map);
 	
+	List<GovermentDepartmentConfigEntity> queryAllList(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(GovermentDepartmentConfigEntity govermentDepartmentConfig);
