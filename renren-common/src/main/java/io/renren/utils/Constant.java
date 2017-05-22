@@ -11,6 +11,7 @@ public class Constant {
 	/** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
 
+	public static final String WEB_SITE="http://172.27.35.1:8080/renren_security/appLoginCallBack?accessToken=";
 	/**
 	 * 菜单类型
 	 * 

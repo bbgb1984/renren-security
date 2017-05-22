@@ -85,7 +85,6 @@ public class VoteActivityResultController extends AbstractController {
 			throws IOException {
 		List<VoteActivityResultEntity> lst = new ArrayList<VoteActivityResultEntity>();
 		Object userId = request.getSession().getAttribute("userId");
-		userId = 999;
 		String id = StringUtils.trimToEmpty(request.getParameter("id1"));// 当前活动的id
 		if (userId != null) {
 			String departId = StringUtils.trimToEmpty(request

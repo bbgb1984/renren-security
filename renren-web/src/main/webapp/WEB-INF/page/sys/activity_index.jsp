@@ -127,7 +127,7 @@
                 <i class="login-close fa fa-close"></i>
                 <h2>用户登录</h2>
                 <div class="login-erweima">
-                    <img src="imgs/u11.png" alt="">
+                    <img src="${contextPath}/barcode.jpg" alt="" >
                 </div>
                 <div class="login-btn">
                     <button>扫码登录</button>

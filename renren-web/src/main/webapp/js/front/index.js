@@ -35,14 +35,32 @@ $(function () {
             evaluateSub,
             evaluateClose;
         e.preventDefault();
+        var nologinStatus=true;
+        $.ajax({  
+		    type: "get",  
+			url:ctx+"/getAppLoginStatus.html?timestamps="+new Date(),  
+			async: false,  
+			error: function(request) {  
+			},  
+			success: function(r) { 
+				alert(r);
+				var json=JSON.parse( r )
+			    //接收后台返回的结果  
+				if(json.code==0){
+					alert(11);
+					nologinStatus=false;
+				}
+			}  
+		});
         
-        
+        alert(nologinStatus);
         //判断登录
-        if(false){
+        if(nologinStatus){
             //登录前
             var login = $($('#login-tem').html()),
                 loginCloseBtn = login.find('.fa-close'),
                 saomaBtn = login.find('.login-btn').find('button');
+            
             $body.append(login);
             login.css({
                 'height':$w.height()
