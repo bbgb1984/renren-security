@@ -25,37 +25,30 @@ $(function () {
         }
     });
 
-
-
-
-
     //弹出评价框
     units.on('click', function (e) {
         var evaluate,
             evaluateSub,
             evaluateClose;
         e.preventDefault();
-        var nologinStatus=true;
-        $.ajax({  
-		    type: "get",  
-			url:ctx+"/getAppLoginStatus.html?timestamps="+new Date(),  
-			async: false,  
-			error: function(request) {  
-			},  
-			success: function(r) { 
-				alert(r);
-				var json=JSON.parse( r )
-			    //接收后台返回的结果  
-				if(json.code==0){
-					alert(11);
-					nologinStatus=false;
-				}
-			}  
-		});
-        
-        alert(nologinStatus);
+//        $.ajax({  
+//		    type: "get",  
+//			url:ctx+"/getAppLoginStatus.html?timestamps="+new Date(),  
+//			async: false,  
+//			error: function(request) {  
+//			},  
+//			success: function(r) { 
+//				alert(r);
+//				var json=JSON.parse( r )
+//			    //接收后台返回的结果  
+//				if(json.code==0){
+//					nologinStatus=false;
+//				}
+//			}  
+//		});
+        var nologinStatus= getAppLoginStatus();
         //判断登录
-        if(nologinStatus){
+        if(!nologinStatus){
             //登录前
             var login = $($('#login-tem').html()),
                 loginCloseBtn = login.find('.fa-close'),
@@ -69,54 +62,59 @@ $(function () {
                 login.remove();
             });
 
-            saomaBtn.on('click', function () {
-                //登录后
-                login.remove();
-                var data = {
-                    id:$(this).find('.udi-title p').attr('unit-id'),
-                    name:$(this).find('.udi-title p').html()
-                };
-                evaluate = $(template('evaluate-tem',data));
-                $body.append(evaluate);
-                evaluate.css({
-                    'height':$w.height()
-                });
-
-                //提交评论
-                evaluateSub = $('.evaluate-wrap-sub button');
-                
-                evaluateSub.on('click', function () {
-                    //虚拟数据
-					$.ajax({  
-					    type: "POST",  
-						url:ctx+"/voteactivityresult/save",  
-						data:$('#commentform').serialize(),  
-						async: false,  
-						error: function(request) {  
-						    alert("评论失败,请刷新页面重试！");  
-						    return false;
-						},  
-						success: function(r) { 
-							var json=JSON.parse( r )
-						    //接收后台返回的结果  
-							if(json.code==0){
-								alert("恭喜你，评价成功！");
-								subSuccess(); //成功后执行
-							}else{
-								alert("评论失败,请刷新页面重试！");
-								return false;
-							}
-						}  
-					});
-	            });
-
-                //关闭评价框
-                evaluateClose = evaluate.find('.fa-close');
-                evaluateClose.on('click', function (e) {
-                    console.log(1);
-                    $(this).parent().parent().parent().remove();
-                })
-            })
+            if(getAppLoginStatus()){//如果登陆则刷新当前页面
+            	window.location.refresh();
+            }else{
+            	setInterval(getAppLoginStatus2,1000);//轮询执行，500ms一次
+            }
+//            saomaBtn.on('click', function () {
+//                //登录后
+//                login.remove();
+//                var data = {
+//                    id:$(this).find('.udi-title p').attr('unit-id'),
+//                    name:$(this).find('.udi-title p').html()
+//                };
+//                evaluate = $(template('evaluate-tem',data));
+//                $body.append(evaluate);
+//                evaluate.css({
+//                    'height':$w.height()
+//                });
+//
+//                //提交评论
+//                evaluateSub = $('.evaluate-wrap-sub button');
+//                
+//                evaluateSub.on('click', function () {
+//                    //虚拟数据
+//					$.ajax({  
+//					    type: "POST",  
+//						url:ctx+"/voteactivityresult/save",  
+//						data:$('#commentform').serialize(),  
+//						async: false,  
+//						error: function(request) {  
+//						    alert("评论失败,请刷新页面重试！");  
+//						    return false;
+//						},  
+//						success: function(r) { 
+//							var json=JSON.parse( r )
+//						    //接收后台返回的结果  
+//							if(json.code==0){
+//								alert("恭喜你，评价成功！");
+//								subSuccess(); //成功后执行
+//							}else{
+//								alert("评论失败,请刷新页面重试！");
+//								return false;
+//							}
+//						}  
+//					});
+//	            });
+//
+//                //关闭评价框
+//                evaluateClose = evaluate.find('.fa-close');
+//                evaluateClose.on('click', function (e) {
+//                    console.log(1);
+//                    $(this).parent().parent().parent().remove();
+//                })
+//            })
         }else{
         	var data = {
                     id:$(this).find('.udi-title p').attr('unit-id'),
@@ -169,7 +167,47 @@ $(function () {
         }
     });
 
+    function getAppLoginStatus2(){
+    	$.ajax({  
+    		type: "get",  
+    		url:ctx+"/getAppLoginStatus.html?timestamps="+new Date(),  
+    		async: false,  
+    		error: function(request) { 
+    		},  
+    		success: function(r) { 
+    			var json=JSON.parse( r )
+    			//接收后台返回的结果  
+    			if(json.code==0){
+    				window.location.reload();
+    			}else{
+    			}
+    		}  
+    	});
+    }
 
+
+    function getAppLoginStatus(){
+    	var flag=false;
+    	 $.ajax({  
+ 		    type: "get",  
+ 			url:ctx+"/getAppLoginStatus.html?timestamps="+new Date(),  
+ 			async: false,  
+ 			error: function(request) { 
+ 				flag= false;
+ 			},  
+ 			success: function(r) { 
+ 				var json=JSON.parse( r )
+ 			    //接收后台返回的结果  
+ 				if(json.code==0){
+ 					flag= true;
+ 				}else{
+ 					flag= false;
+ 				}
+ 			}  
+ 		});
+    	 return flag;
+    }
+    
     function subSuccess(data) {
         var unitrankHtml = template('unitrank-tem',{data:sortRank('count',data)});
         $('.evaluate').remove();

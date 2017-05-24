@@ -1,0 +1,116 @@
+@import "var";
+
+
+main{
+  width:100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  padding: 0 3% 3% 3%;
+  .activetop{
+    width: 106%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    padding:5%;
+    margin:0 -3%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+    .active-title{
+      width: 100%;
+      .active-title-left{
+        width: 100%;
+        position: relative;
+        h1{
+          @include commonh1;
+        }
+        .activetime{
+          font-size: 14px;
+          color: #cccccc;
+          padding-top: 2%;
+        }
+      }
+      .active-title-right{
+        width: 100%;
+        margin-top:3%;
+        .pull-left{
+          width:70%;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          padding-right:2%;
+          table{
+            width:100%;
+            thead{
+              background-color: $mainColor;
+              color: #ffffff;
+            }
+            td{
+              border:1px solid #000000;
+              text-align: center;
+            }
+          }
+          .activebtn{
+            margin-top:7%;
+            a{
+              @include commonBtn;
+              height:30px;
+              line-height: 30px;
+            }
+          }
+        }
+      }
+    }
+    .active-info{
+      border-radius: 4px;
+      background-color: #eeeeee;
+      padding:15px;
+      margin-top: 20px;
+      p{
+        text-indent: 2em;
+        font-size: 14px;
+        line-height: 1.5em;
+      }
+    }
+  }
+
+  .units{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    margin-top:5%;
+    .units-top {
+      @include commonTop;
+    }
+    .units-items{
+      padding:0 3% 10% 3%;
+      .units-item{
+        display: block;
+        text-decoration: none;
+        margin:2% 0;
+        border-radius: 5px;
+        box-shadow: 0 0 1px 0 rgba(0,0,0,.2);
+        .units-item-name{
+          padding:2.5% 0 2.5% 3% ;
+          border:1px solid #eeeeee;
+          position: relative;
+          .fa{
+            position: absolute;
+            color: #e0e0e0;
+            top:50%;
+            right:2%;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+
+  }
+}
+

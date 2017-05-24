@@ -1,0 +1,68 @@
+@import "var";
+
+
+.evaluate{
+  .evalutate-top{
+    @include commonTop;
+    margin-top:4%;
+  }
+  .evalutate-content{
+    .evaluate-item{
+      border-radius: 2%;
+      padding:4%;
+      margin:3% 0;
+      background-color: #ffffff;
+      h3{
+        margin-bottom:3%;
+      }
+      .evaluate-opt{
+        input{
+          margin:0 3%;
+        }
+        input:first-child{
+          margin-left:0;
+        }
+      }
+      .suggestion{
+        width: 100%;
+        height: 100px;
+        line-height:1.5em;
+        font-size: 14px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+        outline: none;
+      }
+      .tip{
+        text-align: right;
+        span{
+          font-size: 24px;
+          font-style: italic;
+          font-family: "Bodoni MT",Didot,"Didot LT STD","Hoefler Text",serif;
+          font-weight: bold;
+        }
+      }
+    }
+    .evaluate-tip{
+      font-size: 14px;
+      height: 14px;
+      color: #cf0d00;
+      text-align: center;
+      margin:3% 0;
+    }
+    .evaluate-item:first-child{
+      margin-top:0;
+      border-radius:0 0 2% 2% ;
+    }
+    .evaluate-sub{
+      button{
+        @include commonBtn;
+        margin:0 auto;
+        padding:2.5% 5%;
+      }
+    }
+  }
+}

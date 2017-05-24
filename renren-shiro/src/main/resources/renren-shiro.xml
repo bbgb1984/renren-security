@@ -58,6 +58,7 @@
 	        	/appLoginCallBack.html=anon
 	        	/appLogin.html=anon
 	        	/getAppLoginStatus.html=anon
+	        	/wx/**=anon
 	        	/**=authc
 	        </value>
 	    </property>

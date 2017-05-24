@@ -2,6 +2,7 @@ package io.renren.controller;
 
 import io.renren.entity.VoteActivityEntity;
 import io.renren.entity.VoteActivityResultEntity;
+import io.renren.entity.VoteRankingVo;
 import io.renren.service.VoteActivityResultService;
 import io.renren.service.VoteActivityService;
 import io.renren.utils.PageUtils;
@@ -51,11 +52,12 @@ public class VoteActivityResultController extends AbstractController {
 	@RequiresAuthentication
 	public R list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
+		params.put("id", "3");
 		Query query = new Query(params);
 
-		List<VoteActivityResultEntity> voteActivityResultList = voteActivityResultService
-				.queryList(query);
-		int total = voteActivityResultService.queryTotal(query);
+		List<VoteRankingVo> voteActivityResultList = voteActivityResultService
+				.queryComment(query);
+		int total = voteActivityResultService.queryCommentCount(query);
 
 		PageUtils pageUtil = new PageUtils(voteActivityResultList, total,
 				query.getLimit(), query.getPage());
@@ -104,13 +106,12 @@ public class VoteActivityResultController extends AbstractController {
 					String eVal = request.getParameter(ele);
 					VoteActivityResultEntity voteActivityResult = new VoteActivityResultEntity();
 					voteActivityResult.setDepartId(Long.parseLong(departId));
-					voteActivityResult.setUserId(0L);
+					voteActivityResult.setUserId(userId.toString());
 					voteActivityResult.setVoteActivityId(Long.parseLong(id));
 					voteActivityResult.setVoteActivityParamId(eKey);
 					voteActivityResult.setVoteActivityParamVal(eVal);
-					voteActivityResult.setUserId(Long.parseLong(userId
-							.toString()));
-					;
+//					voteActivityResult.setUserId(Long.parseLong(userId
+//							.toString()));
 					voteActivityResult.setCommentDesc(suggestion);
 					lst.add(voteActivityResult);
 				} catch (NumberFormatException ex) {
@@ -126,7 +127,7 @@ public class VoteActivityResultController extends AbstractController {
 				}
 			}
 		}
-		return R.error();
+		return R.error("请登录app后再评价！");
 	}
 
 	/**

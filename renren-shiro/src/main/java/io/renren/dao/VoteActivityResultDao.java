@@ -16,10 +16,14 @@ public interface VoteActivityResultDao extends BaseDao<VoteActivityResultEntity>
 	
 	int queryCommentNumById(Object id);
 	
+	int queryCommentCount(Object param);
+	
 	public List<VoteRankingVo> queryHighCommentRateTopTen(
 			Object param);
 	
 	public List<VoteRankingVo> queryCommentTopTen(Object param);
+	
+	public List<VoteRankingVo> queryComment(Object param);
 	
 	/**
 	 * 统计当前活动当前用户已评价过的单位总数
@@ -48,4 +52,13 @@ public interface VoteActivityResultDao extends BaseDao<VoteActivityResultEntity>
 	 * @return
 	 */
 	public List<VoteRankingVo> queryCommentResultDetail(Object param);
+	
+	public List<VoteRankingVo> queryParamRank(Object param);
+	
+	/**
+	 * 查询活动每个单位的总评价数，倒序
+	 * @param id
+	 * @return
+	 */
+	public List<VoteRankingVo> queryDepartCommentRank(Object id);
 }

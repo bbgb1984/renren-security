@@ -7,73 +7,10 @@
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
-		<div class="grid-btn">
-			#if($shiro.hasPermission("voteactivityresult:save"))
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			#end
-			#if($shiro.hasPermission("voteactivityresult:update"))
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			#end
-			#if($shiro.hasPermission("voteactivityresult:delete"))
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			#end
-		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
     </div>
-    
-    <div v-show="!showList" class="panel panel-default">
-		<div class="panel-heading">{{title}}</div>
-		<form class="form-horizontal">
-											<div class="form-group">
-			   	<div class="col-sm-2 control-label">评价活动id</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.voteActivityId" placeholder="评价活动id"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">单位id</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.departId" placeholder="单位id"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">评价项id</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.voteActivityParamId" placeholder="评价项id"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">评价值</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.voteActivityParamVal" placeholder="评价值"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">投票人</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.userId" placeholder="投票人"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">投票时间</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.voteTime" placeholder="投票时间"/>
-			    </div>
-			</div>
-									<div class="form-group">
-			   	<div class="col-sm-2 control-label">状态 1：有效；0：无效</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="voteActivityResult.status" placeholder="状态 1：有效；0：无效"/>
-			    </div>
-			</div>
-							<div class="form-group">
-				<div class="col-sm-2 control-label"></div> 
-				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-			</div>
-		</form>
-	</div>
+    <input type="text" id="id" value="${id}">
 </div>
 
 <script src="${rc.contextPath}/js/sys/voteactivityresult.js?_${date.systemTime}"></script>

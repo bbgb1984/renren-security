@@ -375,7 +375,7 @@ public class VoteIndexController extends AbstractController {
 					}
 				}
 				if (StringUtils.equals(cookieName, "cusno")) {// app用户唯一标示
-					appVersion = cookieValue;
+					cusNo = cookieValue;
 					if (StringUtils.isBlank(cookieValue)) {
 						String msg = "用户信息异常！";
 						map.put("msg", msg);
@@ -420,7 +420,7 @@ public class VoteIndexController extends AbstractController {
 			map.put("msg", msg);
 			return "tips/app_login_fail.jsp";
 		}
-		GuavaCacheUtils.userInfoCache.put(accessToken, cusNo);// 把用户唯一标示放到缓存里，用于判断用户是否登陆成功
+		GuavaCacheUtils.userInfoCache.put(accessToken, cusNo+"");// 把用户唯一标示放到缓存里，用于判断用户是否登陆成功
 		return "tips/app_login_success.jsp";
 	}
 	@ResponseBody
@@ -437,8 +437,8 @@ public class VoteIndexController extends AbstractController {
 		
 		if (StringUtils.isNotBlank(cusNo)) {
 			ShiroUtils.setSessionAttribute("userId", cusNo);//将用户id放到session里
-			GuavaCacheUtils.accessTokenCache.put(accessToken, "");// 登陆成功之后将session里的key移出
-			GuavaCacheUtils.userInfoCache.put(accessToken, "");// 登陆成功之后将session里的key移出
+//			GuavaCacheUtils.accessTokenCache.put(accessToken, "");// 登陆成功之后将session里的key移出
+//			GuavaCacheUtils.accessTokenCache.put("u-"+accessToken, "");// 登陆成功之后将session里的key移出
 			return R.ok();
 		}
 		return R.error();

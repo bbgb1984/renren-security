@@ -149,7 +149,7 @@
 					<c:forEach items="${paramList }" var="items" varStatus="i">
                         <li class="clearfix">
                             <div class="pull-left">
-                                <span>${varStatus+1}、</span>
+                                <span>${i.index+1}、</span>
                                 <span>${items.paramName}</span>
                             </div>
                             <div class="pull-right">

@@ -1,0 +1,143 @@
+@import "var";
+
+.current-unit{
+  margin-top:5%;
+  .current-unit-top{
+    @include commonTop;
+  }
+}
+
+
+.statistics{
+  margin:5% 0;
+  font-size: 14px;
+  background-color: #fff;
+  .statistics-top{
+    @include commonTop;
+  }
+  .statistics-table{
+    padding:3%;
+    .totalrank{
+      color: #666;
+      margin-top:3%;
+      .vtline{
+        @extend %vtline;
+      }
+      span:nth-of-type(3){
+        margin-right:5%;
+      }
+      .fa-star{
+        color: #ff7800;
+      }
+    }
+    .swiper-slide{
+      padding:0 0 6%  0;
+
+    }
+    .swiper-pagination-bullet-active{
+      background-color: $mainColor;
+    }
+    .swiper-pagination-bullets{
+      bottom:0 !important;
+    }
+    table{
+      margin-top:3%;
+      width:100%;
+      thead{
+        background-color: $mainColor;
+        color: #ffffff;
+        text-align: center;
+        td{
+          border:1px solid #fff;
+          line-height: 1.5em;
+          padding:2% 0;
+          .fa{
+            font-size: 22px;
+            padding-left:8px;
+            position: relative;
+            top:3px;
+          }
+        }
+        .re-rank{
+          cursor: pointer;
+          &:hover{
+            background-color: #C61000;
+
+          }
+        }
+      }
+      tbody{
+        text-align: center;
+        td{
+          padding:2% 0;
+          line-height: 1.5em;
+          border:1px solid #cccccc;
+        }
+      }
+    }
+  }
+
+}
+.rank{
+  margin:5% 0;
+  background-color: #fff;
+  font-size: 14px;
+  .rank-top{
+    @include commonTop;
+  }
+  .rank-table{
+    @extend %vartable;
+    padding:3%;
+    .swiper-slide{
+      padding:0 0 6%  0;
+
+    }
+    .swiper-pagination-bullet-active{
+      background-color: $mainColor;
+    }
+    .swiper-pagination-bullets{
+      bottom:0 !important;
+    }
+    .swiper-button-next,.swiper-button-prev{
+      background: rgba(143, 13, 0, 0.7);
+      border-radius: 8px;
+      color: #ffffff;
+      text-align: center;
+      line-height: 44px;
+      font-size: 22px;
+      display: none;
+    }
+    .rank-table-title{
+      margin-top:3%;
+      .vtline{
+        @extend %vtline;
+      }
+    }
+    .swiper-tip{
+      color: #aaaaaa;
+      text-align: center;
+      margin-top:3%;
+    }
+    table{
+      margin-top:3%;
+      width:100%;
+      thead{
+        td{
+          height:auto;
+          padding:2% 0;
+          line-height: 1.5em;
+        }
+      }
+      tbody{
+        td{
+          height:auto;
+          padding:2% 0;
+          line-height: 1.5em;
+
+        }
+      }
+    }
+  }
+
+
+}

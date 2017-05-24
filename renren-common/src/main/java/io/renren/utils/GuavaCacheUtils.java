@@ -11,7 +11,7 @@ public class GuavaCacheUtils {
 	public final static LoadingCache<String, Object> accessTokenCache = CacheBuilder
 			.newBuilder()
 //			缓存有效期2分钟
-			.expireAfterWrite(10, TimeUnit.MINUTES).maximumSize(1000)
+			.expireAfterWrite(20, TimeUnit.MINUTES).maximumSize(1000)
 			.build(new CacheLoader<String, Object>() {
 				@Override
 				public Object load(String arg0) throws Exception {
@@ -22,7 +22,7 @@ public class GuavaCacheUtils {
 	public final static LoadingCache<String, Object> userInfoCache = CacheBuilder
 			.newBuilder()
 			//			缓存有效期2分钟
-			.expireAfterWrite(10, TimeUnit.MINUTES).maximumSize(1000)
+			.expireAfterWrite(20, TimeUnit.MINUTES).maximumSize(1000)
 			.build(new CacheLoader<String, Object>() {
 				@Override
 				public Object load(String arg0) throws Exception {

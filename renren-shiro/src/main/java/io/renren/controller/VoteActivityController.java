@@ -44,6 +44,7 @@ public class VoteActivityController  extends AbstractController {
 	@RequiresPermissions("voteactivity:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
+		
         Query query = new Query(params);
 
 		List<VoteActivityEntity> voteActivityList = voteActivityService.queryList(query);

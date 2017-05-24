@@ -70,7 +70,17 @@ public class VoteActivityResultServiceImpl implements VoteActivityResultService 
 		// TODO Auto-generated method stub
 		return voteActivityResultDao.queryCommentTopTen(param);
 	}
-
+	
+	@Override
+	public List<VoteRankingVo> queryComment(Object param) {
+		// TODO Auto-generated method stub
+		return voteActivityResultDao.queryComment(param);
+	}
+	
+	@Override
+	public int queryCommentCount(Map<String, Object> map){
+		return voteActivityResultDao.queryCommentCount(map);
+	}
 	@Override
 	public List<VoteRankingVo> queryHighCommentRateTopTen(
 			Object param) {
@@ -99,6 +109,18 @@ public class VoteActivityResultServiceImpl implements VoteActivityResultService 
 	public List<VoteRankingVo> queryCommentResultDetail(Object param) {
 		// TODO Auto-generated method stub
 		return voteActivityResultDao.queryCommentResultDetail(param);
+	}
+	
+	@Override
+	public List<VoteRankingVo> queryParamRank(Object param) {
+		// TODO Auto-generated method stub
+		return voteActivityResultDao.queryParamRank(param);
+	}
+
+	@Override
+	public List<VoteRankingVo> queryDepartCommentRank(Object id) {
+		// TODO Auto-generated method stub
+		return voteActivityResultDao.queryDepartCommentRank(id);
 	}
 
 }

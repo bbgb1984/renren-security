@@ -28,7 +28,7 @@ public class VoteActivityResultEntity implements Serializable {
 	//评价值
 	private String voteActivityParamVal;
 	//投票人
-	private Long userId;
+	private String userId;
 	//投票时间
 	private Date voteTime;
 	//状态 1：有效；0：无效
@@ -99,13 +99,13 @@ public class VoteActivityResultEntity implements Serializable {
 	/**
 	 * 设置：投票人
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	/**
 	 * 获取：投票人
 	 */
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 	/**

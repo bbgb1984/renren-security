@@ -1,13 +1,11 @@
 $(function () {
+	var id=$('#id').val()
     $("#jqGrid").jqGrid({
-        url: '../voteactivityresult/list',
+        url: '../voteactivityresult/list?id='+id,
         datatype: "json",
         colModel: [			
-			{ label: '单位名称', name: 'departId', index: 'depart_id', width: 80 }, 			
-			{ label: '评价项', name: 'voteActivityParamId', index: 'vote_activity_param_id', width: 80 }, 			
-			{ label: '评价值', name: 'voteActivityParamVal', index: 'vote_activity_param_val', width: 80 }, 			
-			{ label: '投票人', name: 'userId', index: 'user_id', width: 80 }, 			
-			{ label: '投票时间', name: 'voteTime', index: 'vote_time', width: 80 }			
+			{ label: '单位名称', name: 'departName', index: 'departName', width: 80 }, 			
+			{ label: '得票数', name: 'commentNum', index: 'commentNum', width: 80 }
         ],
 		viewrecords: true,
         height: 385,

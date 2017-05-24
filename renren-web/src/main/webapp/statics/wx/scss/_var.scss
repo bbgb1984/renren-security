@@ -1,0 +1,137 @@
+$mainColor:#A60D00;
+$mis:"微软雅黑";
+
+@mixin commonh1(){
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@mixin commonBtn(){
+  display: block;
+  font-size: 14px;
+  width: 50%;
+  text-align: center;
+  color: #ffffff;
+  background-color: $mainColor;
+  border:none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover{
+    text-decoration: none;
+    background-color: #8f0d00;
+  }
+}
+
+@mixin commonTop(){
+  background: -webkit-linear-gradient(#FF1A06, #A60D00); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(#FF1A06, #A60D00); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(#FF1A06, #A60D00); /* Firefox 3.6 - 15 */
+  background: linear-gradient(#FF1A06, #A60D00); /* 标准的语法 */
+  border-radius: 5px;
+  h3{
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    padding:2.5% 0 2.5% 2.5%;
+    .fa{
+      font-size: 18px;
+    }
+  }
+}
+
+
+@mixin lineshadow{
+  height: 1px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
+}
+
+%vartable{
+  table{
+    thead{
+      height: 45px;
+      line-height: 1.5em;
+      background-color: $mainColor;
+      color: #ffffff;
+      text-align: center;
+      td{
+        .fa{
+          font-size: 22px;
+          padding-left:8px;
+          position: relative;
+          top:1px;
+          left:-4px;
+        }
+      }
+      .re-rank{
+        cursor: pointer;
+        &:hover{
+          background-color: #C61000;
+
+        }
+      }
+    }
+    tbody{
+      text-align: center;
+      tr{
+        background: #ffffff;
+      }
+      td{
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+  }
+}
+
+%fa-close{
+  position: absolute;
+  top:0;
+  right:0;
+  font-size: 30px;
+  cursor: pointer;
+  &:hover{
+    color: #eeeeee;
+  }
+}
+
+%vtline{
+  border:2px solid $mainColor;
+  margin-right:3%;
+}
+
+%rankul{
+  ul{
+    font-size: 14px;
+    padding:3%;
+    li{
+      margin-bottom: 2%;
+      a{
+        display: block;
+        >.pull-left{
+          line-height: 20px;
+          i{
+            margin-right:10px;
+            display: block;
+            width:20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            background-color: $mainColor;
+            color: #ffffff;
+            border-radius: 50%;
+          }
+          span.pull-left{
+            width:150px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+          }
+        }
+        >.pull-right{
+          width:115px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}

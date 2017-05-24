@@ -23,8 +23,14 @@ public interface VoteActivityResultService {
 	
 	int queryCommentNumById(Object id);
 	
+	List<VoteRankingVo> queryDepartCommentRank(Object id);
+	
 	
 	List<VoteRankingVo> queryCommentTopTen(Object param);
+	
+	List<VoteRankingVo> queryComment(Object param);
+	
+	int queryCommentCount(Map<String, Object> map);
 	
 	/**
 	 * 获取指定活动 所有单位的好评总数
@@ -39,6 +45,13 @@ public interface VoteActivityResultService {
 	 * @return
 	 */
 	List<VoteRankingVo> queryCommentResultDetail(Object param);
+	
+	/**
+	 * 获取每项的评价汇总数据 好评率，好评总数 按好评率从高到低排序
+	 * @param param
+	 * @return
+	 */
+	List<VoteRankingVo> queryParamRank(Object param);
 	
 	/**
 	 * 获取评价最高的前十个单位

@@ -28,6 +28,23 @@
 
 	</resultMap>
 
+	<select id="queryDepartCommentRank" resultType="io.renren.entity.VoteRankingVo">
+		SELECT
+		count(1) AS
+		commentNum,
+		depart_id
+		FROM
+		vote_activity_result
+		WHERE
+		vote_activity_id =
+		#{value}
+		GROUP
+		BY depart_id
+		ORDER BY
+		commentNum DESC
+
+	</select>
+
 	<select id="queryMaxCommentTopTen" resultType="io.renren.entity.VoteRankingVo">
 		select count(1) as
 		commentNum,t.`name` as departName,t.id as departId from (
@@ -48,7 +65,8 @@
 	<select id="queryCommentResultDetail" resultType="io.renren.entity.VoteRankingVo">
 		SELECT
 		x.`param_name` AS paramName,
-		FORMAT(x.good / y.total, 2) * 100 AS totalRate,
+		FORMAT(x.good / y.total, 2) * 100 AS
+		totalRate,
 		y.total AS commentNum
 		FROM
 		(
@@ -68,14 +86,16 @@
 		goverment_department_config g
 		WHERE
 		r.vote_activity_param_id = p.id
-		AND r.depart_id = g.id
+		AND
+		r.depart_id = g.id
 		AND r.vote_activity_param_val = '1'
-		AND r.vote_activity_id = #{activityId}
-		AND g.id = #{departId} 
+		AND
+		r.vote_activity_id = #{activityId}
+		AND g.id = #{departId}
 		) t
 		GROUP BY
 		param_name
-		) x,
+		) x right join
 		(
 		SELECT
 		count(1) AS total,
@@ -83,7 +103,8 @@
 		t.id
 		FROM
 		(
-		SELECT DISTINCT
+		SELECT
+		DISTINCT
 		p.param_name,
 		r.user_id,
 		p.id
@@ -93,16 +114,79 @@
 		goverment_department_config g
 		WHERE
 		r.vote_activity_param_id = p.id
-		AND r.depart_id = g.id 
-		AND r.vote_activity_id = #{activityId}
+		AND
+		r.depart_id = g.id
+		AND
+		r.vote_activity_id = #{activityId}
 		AND g.id = #{departId}
 		) t
 		GROUP BY
 		param_name
 		) y
-		WHERE
+		on
 		x.id = y.id
 		order by x.id ASC
+	</select>
+
+	<select id="queryParamRank" resultType="io.renren.entity.VoteRankingVo">
+		SELECT
+		x.`param_name` AS paramName,
+		FORMAT(x.good / y.total, 2) * 100 AS totalRate,
+		y.total AS commentNum,x.`name` as departName,x.id as departId
+		FROM
+		(
+		SELECT
+		count(1) AS good,
+		t.param_name,
+		t.id,t.`name`
+		FROM
+		(
+		SELECT
+		p.param_name,
+		-- r.user_id,
+		g.id,g.`name`
+		FROM
+		vote_activity_result r,
+		vote_activity_param p,
+		goverment_department_config g
+		WHERE
+		r.vote_activity_param_id = p.id
+		AND r.depart_id = g.id
+		AND r.vote_activity_param_val = '1'
+		AND r.vote_activity_id = #{activityId}
+		and r.vote_activity_param_id=#{activityParamId}
+		) t
+		GROUP BY
+		name
+		) x right join 
+		(
+		SELECT
+		count(1) AS total,
+		t.param_name,
+		t.id,t.`name`
+		FROM
+		(
+		SELECT
+		p.param_name,
+		-- r.user_id,
+		g.id,g.`name`
+		FROM
+		vote_activity_result r,
+		vote_activity_param p,
+		goverment_department_config g
+		WHERE
+		r.vote_activity_param_id = p.id
+		AND r.depart_id = g.id
+		AND r.vote_activity_id = #{activityId}
+		and r.vote_activity_param_id=#{activityParamId}
+		) t
+		GROUP BY
+		name
+		) y
+		on
+		x.id = y.id
+		ORDER BY
+		totalRate desc
 	</select>
 
 
@@ -123,6 +207,49 @@
 		AND result.vote_activity_id = #{value}
 		)t
 		group by t.`name` order by commentNum DESC limit 0,10
+	</select>
+
+	<select id="queryComment" resultType="io.renren.entity.VoteRankingVo">
+		select
+		count(1) as
+		commentNum ,t.`name` as departName
+		from(
+		SELECT DISTINCT
+		result.vote_activity_id,
+		depart.`name`,
+		result.user_id
+		FROM
+		vote_activity_result result,
+		goverment_department_config depart
+		WHERE
+		result.depart_id = depart.id
+		AND result.vote_activity_id = #{id}
+		)t
+		group by t.`name` order by commentNum DESC 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryCommentCount" resultType="int">
+	select count(1) from (
+		select
+		count(1) 
+		from(
+		SELECT DISTINCT
+		result.vote_activity_id,
+		depart.`name`,
+		result.user_id
+		FROM
+		vote_activity_result result,
+		goverment_department_config depart
+		WHERE
+		result.depart_id = depart.id
+		AND result.vote_activity_id = #{id}
+		)t
+		group by t.`name` 
+		)x
+		
 	</select>
 
 	<select id="queryHighCommentRateTopTen" resultType="io.renren.entity.VoteRankingVo">

@@ -1,0 +1,80 @@
+@import "var";
+
+
+.item{
+  background-color: #fff;
+  width:100%;
+  margin-top:5%;
+  .item-top{
+    @include commonTop;
+  }
+  .item-content{
+    .chart{
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      margin:0 3%;
+      padding:3% 0;
+      border-bottom:1px solid #cccccc;
+    }
+    .rank{
+      @extend %rankul;
+      .rank-table{
+        @extend %vartable;
+        padding:3%;
+        .swiper-slide{
+          padding:0 0 6%  0;
+
+        }
+        .swiper-pagination-bullet-active{
+          background-color: $mainColor;
+        }
+        .swiper-pagination-bullets{
+          bottom:0 !important;
+        }
+        .swiper-button-next,.swiper-button-prev{
+          background: rgba(143, 13, 0, 0.7);
+          border-radius: 8px;
+          color: #ffffff;
+          text-align: center;
+          line-height: 44px;
+          font-size: 22px;
+          display: none;
+        }
+        .rank-table-title{
+          margin-top:3%;
+          .vtline{
+            @extend %vtline;
+          }
+        }
+        .swiper-tip{
+          color: #aaaaaa;
+          text-align: center;
+          margin-top:3%;
+        }
+        table{
+          margin-top:3%;
+          width:100%;
+          thead{
+            td{
+              height:auto;
+              padding:2% 0;
+              line-height: 1.5em;
+            }
+          }
+          tbody{
+            td{
+              height:auto;
+              padding:2% 0;
+              line-height: 1.5em;
+
+            }
+          }
+        }
+      }
+    }
+    .lineshadow{
+      @include lineshadow;
+    }
+  }
+}
