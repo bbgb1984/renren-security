@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>评价活动投票结果</title>
+#parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    <input type="text" id="id" value="${id}">
+</div>
+
+<script src="${rc.contextPath}/js/sys/voteactivityresult.js?_${date.systemTime}"></script>
+</body>
+</html>

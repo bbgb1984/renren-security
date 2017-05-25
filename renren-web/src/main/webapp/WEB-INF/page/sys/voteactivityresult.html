@@ -3,16 +3,17 @@
 <head>
 <title>评价活动投票结果</title>
 #parse("sys/header.html")
+
 </head>
 <body>
-<div id="rrapp" v-cloak>
-	<div v-show="showList">
-	    <table id="jqGrid"></table>
-	    <div id="jqGridPager"></div>
-    </div>
-    <input type="text" id="id" value="${id}">
+<div id="twitter-bootstrap-container">
+<div id="twitter-bootstrap-tabs">
+  <ul class="nav nav-tabs">
+    <li ><a href="votecommentranking.html">总评价排行榜</a></li>
+    <li ><a href="votegoodcommentranking.html">好评排行榜</a></li>
+    <li><a href="voteparamcommentranking.html">单项排行榜</a></li>
+  </ul>
 </div>
-
-<script src="${rc.contextPath}/js/sys/voteactivityresult.js?_${date.systemTime}"></script>
+</div>
 </body>
 </html>
